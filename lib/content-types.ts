@@ -1,4 +1,5 @@
 export type PriceSection = "梦占" | "传讯" | "现实问题咨询" | "奇思妙想";
+export type ServiceStatus = "available" | "waitlist" | "paused";
 
 export type PriceItem = {
   id: string;
@@ -8,6 +9,11 @@ export type PriceItem = {
   price: string;
   unit: string;
   badge: string;
+  delivery: string;
+  turnaround: string;
+  followUp: string;
+  suitableFor: string;
+  status: ServiceStatus;
   visible: boolean;
   featured: boolean;
 };
