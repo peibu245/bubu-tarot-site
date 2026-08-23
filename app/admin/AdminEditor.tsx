@@ -33,7 +33,7 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
   const patchFact = (id: string, patch: Partial<CardFact>) => setContent((current) => ({ ...current, cardFacts: current.cardFacts.map((item) => item.id === id ? { ...item, ...patch } : item) }));
   const patchSpread = (id: string, patch: Partial<SpreadGuide>) => setContent((current) => ({ ...current, spreadGuides: current.spreadGuides.map((item) => item.id === id ? { ...item, ...patch } : item) }));
 
-  const addPrice = (section: PriceItem["section"]) => setContent((current) => ({ ...current, prices: [...current.prices, { id: makeId("price"), section, title: "新项目", description: "", price: "", unit: "元 / 次", badge: "", visible: true, featured: false }] }));
+  const addPrice = (section: PriceItem["section"]) => setContent((current) => ({ ...current, prices: [...current.prices, { id: makeId("price"), section, title: "新项目", description: "", price: "", unit: "元 / 次", badge: "", delivery: "", turnaround: "", followUp: "", suitableFor: "", status: "available", visible: true, featured: false }] }));
   const addPromo = () => setContent((current) => ({ ...current, promotions: [...current.promotions, { id: makeId("promo"), scope: "全站", title: "新活动", description: "", badge: "", startsAt: "", endsAt: "", active: true }] }));
   const addKnowledge = () => setContent((current) => ({ ...current, knowledgeCards: [...current.knowledgeCards, { id: makeId("tip"), tag: "Tips", title: "新的提醒", body: "", visible: true }] }));
   const addFact = () => {
@@ -86,7 +86,7 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
       <ContactPolicyEditor content={content} setContent={setContent} />
 
       <section className="editor-section">
-        <div className="editor-title"><div><span>07 / PRICING</span><h2>分入口价格项目</h2></div></div>
+        <div className="editor-title"><div><span>07 / SERVICES</span><h2>服务项目与定价</h2></div></div>
         <div className="editor-price-groups">
           {priceGroups.map((group) => {
             const items = content.prices.filter((item) => item.section === group.section);
@@ -106,6 +106,11 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
                           <label>价格<input value={item.price} onChange={(event) => patchPrice(item.id, { price: event.target.value })} placeholder="例如 18；未定可填待定" /></label>
                           <label>单位<input value={item.unit} onChange={(event) => patchPrice(item.id, { unit: event.target.value })} placeholder="元 / 1问" /></label>
                           <label>英文小标签<input value={item.badge} onChange={(event) => patchPrice(item.id, { badge: event.target.value })} /></label>
+                          <label>交付形式<input value={item.delivery} onChange={(event) => patchPrice(item.id, { delivery: event.target.value })} placeholder="例如：文字解读" /></label>
+                          <label>预计交付<input value={item.turnaround} onChange={(event) => patchPrice(item.id, { turnaround: event.target.value })} placeholder="例如：24–48 小时" /></label>
+                          <label>原题补充<input value={item.followUp} onChange={(event) => patchPrice(item.id, { followUp: event.target.value })} placeholder="例如：完成后可补充 1 次" /></label>
+                          <label>适合什么情况<input value={item.suitableFor} onChange={(event) => patchPrice(item.id, { suitableFor: event.target.value })} placeholder="例如：有明确问题、希望梳理思路" /></label>
+                          <label>当前接单状态<select value={item.status} onChange={(event) => patchPrice(item.id, { status: event.target.value as PriceItem["status"] })}><option value="available">可预约</option><option value="waitlist">可候补</option><option value="paused">暂不接单</option></select></label>
                         </div>
                         <div className="check-row"><label><input type="checkbox" checked={item.visible} onChange={(event) => patchPrice(item.id, { visible: event.target.checked })} /> 对访客显示</label><label><input type="checkbox" checked={item.featured} onChange={(event) => patchPrice(item.id, { featured: event.target.checked })} /> 标记为推荐</label></div>
                       </article>
