@@ -1045,3 +1045,38 @@ body { font-size:16px; line-height:1.7; }
   overflow:hidden;
 }
 
+/* Customer path refinement: calm first contact and usable mobile navigation. */
+.home-reassurance,.booking-reassurance,.contact-reassurance { margin:14px 0 0; color:#665a6e; font-size:14px; line-height:1.75; }
+.home-reassurance { max-width:36rem; padding-left:13px; border-left:2px solid #aa8ab7; }
+.booking-reassurance { max-width:42rem; }
+.contact-reassurance { max-width:42rem; margin:0 0 22px; color:#5c5362; }
+.guestbook-compact { padding:82px clamp(24px,8vw,130px); background:#fbf8f5; }
+.guestbook-compact .guestbook-intro { max-width:620px; }
+.guestbook-public-note { margin:16px 0 0; color:#766b78; font-size:12px; line-height:1.7; }
+.guestbook-compose { margin:26px 0 30px; padding:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.guestbook-compose summary { padding:17px 0; color:#5f4e68; font-weight:700; cursor:pointer; }
+.guestbook-compose[open] summary { border-bottom:1px solid var(--line); }
+.guestbook-compose .guestbook-form { padding:20px 0; }
+.mobile-menu-toggle,.mobile-menu-layer,.mobile-bottom-actions { display:none; }
+
+@media (max-width:760px) {
+  .public-header { grid-template-columns:minmax(0,1fr) auto auto; gap:8px; min-height:66px; height:66px; padding:0 16px; }
+  .public-brand { min-width:0; font-size:17px; }.public-brand span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .header-booking { min-height:40px; padding:0 12px; display:inline-grid; place-items:center; font-size:12px; white-space:nowrap; }
+  .mobile-menu-toggle { min-width:42px; min-height:42px; padding:0; display:inline-grid; place-items:center; gap:1px; border:1px solid var(--line); border-radius:11px; background:#fffdfa; color:#584b60; font-size:10px; line-height:1.05; cursor:pointer; }
+  .mobile-menu-toggle span:first-child { font-size:18px; line-height:.8; }
+  .mobile-menu-layer { position:fixed; z-index:90; inset:0; display:block; background:rgba(34,25,37,.30); }
+  .mobile-menu { position:absolute; top:10px; right:10px; left:10px; display:grid; padding:14px; border:1px solid #dfd4e2; border-radius:18px; background:#fffdfa; box-shadow:0 18px 50px rgba(37,24,42,.22); }
+  .mobile-menu-head { display:flex; align-items:center; justify-content:space-between; padding:3px 0 12px; border-bottom:1px solid var(--line); color:#443a48; }
+  .mobile-menu-head button { width:36px; height:36px; border:0; border-radius:10px; background:#f2ebf3; color:#5d4c66; font-size:26px; line-height:1; cursor:pointer; }
+  .mobile-menu a { min-height:46px; display:flex; align-items:center; border-bottom:1px solid #eee7ed; color:#49404c; font-size:15px; }
+  .mobile-menu a:last-child { border-bottom:0; }
+  .mobile-bottom-actions { position:fixed; z-index:35; right:14px; bottom:14px; left:14px; display:grid; grid-template-columns:1fr 1fr; gap:9px; padding:8px; border:1px solid rgba(119,93,131,.20); border-radius:16px; background:rgba(255,253,250,.94); box-shadow:0 10px 28px rgba(45,31,50,.16); backdrop-filter:blur(12px); }
+  .mobile-bottom-actions a { min-height:44px; display:grid; place-items:center; border-radius:11px; background:#f1e9f2; color:#604c69; font-size:13px; font-weight:700; }
+  .mobile-bottom-actions a:last-child { background:#70507e; color:#fff; }
+  .public-page { padding-bottom:82px; }
+  .home-reassurance,.booking-reassurance,.contact-reassurance { font-size:13px; }
+  .guestbook-compact { padding:60px 20px; }
+  .guestbook-public-note { font-size:11px; }
+}
+

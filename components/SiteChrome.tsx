@@ -1,4 +1,5 @@
 import Link from "next/link";
+import MobileNav from "./MobileNav";
 import StudioPreviewBridge from "./StudioPreviewBridge";
 
 type ChromeProps = { copy?: Record<string, string> };
@@ -19,6 +20,7 @@ export function SiteHeader({ copy }: ChromeProps) {
         <Link href="/booking">{text(copy, "navBooking", "预约入口")}</Link>
       </nav>
       <Link className="header-booking" href="/booking">{text(copy, "navAction", "选择入口")}</Link>
+      <MobileNav copy={copy} />
       </header>
     </>
   );

@@ -21,19 +21,23 @@ export default async function BookingPage() {
     { href: "/reality", eyebrow: t("bookingRealityEyebrow"), title: t("bookingRealityTitle"), summary: t("bookingRealitySummary"), sections: ["现实问题咨询"], className: "entry-reality" },
     { href: "/ideas", eyebrow: t("bookingIdeasEyebrow"), title: t("bookingIdeasTitle"), summary: t("bookingIdeasSummary"), sections: ["奇思妙想"], className: "entry-ideas" },
   ];
-  const prepare = [1, 2, 3].map((n) => ({ title: t(`bookingPrepare${n}Title`), text: t(`bookingPrepare${n}Text`) }));
+  const prepare = [
+    { title: "先说一句", text: "例如“我想问一段关系”或“我想看看梦角的反应”。" },
+    { title: "有多少说多少", text: "暂时不需要完整背景；信息不足时我会再问。" },
+    { title: "确认后再决定", text: "我会先说明适合的项目、价格和预计时间。" },
+  ];
   const boundaries = [1, 2, 3, 4].map((n) => ({ label: t(`bookingBoundary${n}Label`), text: t(`bookingBoundary${n}Text`) }));
   return (
     <main className="public-page booking-page">
       <PublicTypography settings={content.typography} />
       <SiteHeader copy={copy} />
-      <section className="booking-hero"><div className="booking-avatar"><img src="/brand-mark.jpg" alt="" /></div><p className="micro-label">{t("bookingEyebrow")}</p><h1>{t("bookingTitle")}</h1><p className="editable-copy">{t("bookingLead")}</p><span className={content.bookingsOpen ? "status-pill is-open" : "status-pill"}>{content.bookingsOpen ? t("statusOpen") : t("statusClosed")}</span></section>
+      <section className="booking-hero"><div className="booking-avatar"><img src="/brand-mark.jpg" alt="" /></div><p className="micro-label">{t("bookingEyebrow")}</p><h1>先来聊聊，再决定</h1><p className="editable-copy">不需要先整理成完整的问题。梦向、现实问题、角色与创作主题都可以先来聊，我会帮你确认适合的项目。</p><p className="booking-reassurance">确认项目、价格和预计时间后，再决定是否继续。</p><span className={content.bookingsOpen ? "status-pill is-open" : "status-pill"}>{content.bookingsOpen ? t("statusOpen") : t("statusClosed")}</span></section>
       <CustomContentZone blocks={content.richBlocks} page="booking" slot="afterHero" />
       <div className="booking-flow">
         <section className="flow-step"><div className="flow-title"><span>1</span><p>{t("bookingStep1Label")}</p><h2>{t("bookingStep1Title")}</h2></div><div className="booking-entry-grid">{entries.map((entry) => { const count = prices.filter((item) => entry.sections.includes(item.section)).length; return <Link className={`booking-entry-card ${entry.className}`} href={entry.href} key={entry.href}><div className="booking-entry-meta"><span>{entry.eyebrow}</span><b>{count ? `${count} ${t("itemCountSuffix")}` : t("pricingPending")}</b></div><h3>{entry.title}</h3><p className="editable-copy">{entry.summary}</p><strong>{t("bookingEntryAction")}</strong></Link>; })}</div></section>
-        <section className="flow-step"><div className="flow-title"><span>2</span><p>{t("bookingStep2Label")}</p><h2>{t("bookingStep2Title")}</h2></div><div className="prepare-grid">{prepare.map((item, i) => <article key={i}><span>0{i + 1}</span><h3>{item.title}</h3><p className="editable-copy">{item.text}</p></article>)}</div></section>
+        <section className="flow-step"><div className="flow-title"><span>2</span><p>不需要准备完整资料</p><h2>直接开始就好</h2></div><div className="prepare-grid">{prepare.map((item, i) => <article key={i}><span>0{i + 1}</span><h3>{item.title}</h3><p className="editable-copy">{item.text}</p></article>)}</div></section>
         {promotions.length > 0 && <section className="flow-step"><div className="flow-title"><span>3</span><p>{t("bookingPromoLabel")}</p><h2>{t("bookingPromoTitle")}</h2></div><div className="offer-grid booking-offers">{promotions.map((promotion) => <article className="offer-card" key={promotion.id}><span>{promotion.scope} · {promotion.badge || "NOW"}</span><h3>{promotion.title}</h3><p className="editable-copy">{promotion.description}</p></article>)}</div></section>}
-        <section className="flow-step contact-step" id="contact"><div className="flow-title"><span>{promotions.length > 0 ? "4" : "3"}</span><p>{t("bookingContactLabel")}</p><h2>{t("bookingContactTitle")}</h2></div><div className="contact-panel"><ContactGate bookingsOpen={content.bookingsOpen} contactNote={content.contactNote} channels={content.contactChannels} policies={content.policies} copy={copy} /></div></section>
+        <section className="flow-step contact-step" id="contact"><div className="flow-title"><span>{promotions.length > 0 ? "4" : "3"}</span><p>开始聊聊</p><h2>先联系，再决定</h2></div><div className="contact-panel"><p className="contact-reassurance">可以先问是否适合，不需要马上决定。确认项目和价格之后，再决定是否继续。</p><ContactGate bookingsOpen={content.bookingsOpen} contactNote={content.contactNote} channels={content.contactChannels} policies={content.policies} copy={copy} /></div></section>
         <section className="service-boundary"><div><p className="micro-label">{t("bookingBoundaryEyebrow")}</p><h2>{t("bookingBoundaryTitle")}</h2></div><div className="boundary-list">{boundaries.map((item, i) => <p className="editable-copy" key={i}><b>{item.label}</b>{item.text}</p>)}</div></section>
       </div>
       <CustomContentZone blocks={content.richBlocks} page="booking" slot="beforeFooter" />

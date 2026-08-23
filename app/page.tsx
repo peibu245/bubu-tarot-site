@@ -3,6 +3,7 @@ import { SiteFooter, SiteHeader } from "../components/SiteChrome";
 import Link from "next/link";
 import PublicTypography from "../components/PublicTypography";
 import CustomContentZone from "../components/CustomContentZone";
+import Guestbook from "../components/Guestbook";
 
 export const dynamic = "force-dynamic";
 
@@ -59,6 +60,7 @@ export default async function Home() {
           <h1>{t("homeTitle")}</h1>
           <p className="home-deckline editable-copy">{t("homeDeckline")}</p>
           <p className="home-lead editable-copy">{t("homeLead")}</p>
+          <p className="home-reassurance">不知道怎么开始也没关系，先发一句话过来就好；信息不够时我会再问。</p>
           <div className="home-actions">
             <Link className="primary-action" href="/booking">{t("homePrimaryAction")}</Link>
             <a className="text-action" href="#services">{t("homeSecondaryAction")}</a>
@@ -123,8 +125,7 @@ export default async function Home() {
           </div>
         </section>
       )}
-
-
+      <Guestbook copy={copy} compact />
       <section className="booking-banner">
         <div><p className="micro-label">{t("homeBookingEyebrow")}</p><h2>{t("homeBookingTitle")}</h2><p className="editable-copy">{content.contactNote}</p></div>
         <Link className="primary-action" href="/booking">{t("homeBookingAction")}</Link>

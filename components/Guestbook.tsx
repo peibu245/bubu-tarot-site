@@ -11,7 +11,7 @@ function visitorKey() {
   return key;
 }
 
-export default function Guestbook({ copy = {} }: { copy?: Record<string, string> }) {
+export default function Guestbook({ copy = {}, compact = false }: { copy?: Record<string, string>; compact?: boolean }) {
   const t = (key: string, fallback: string) => copy[key] || fallback;
   const [entries, setEntries] = useState<Entry[]>([]);
   const [nickname, setNickname] = useState("");
@@ -33,16 +33,20 @@ export default function Guestbook({ copy = {} }: { copy?: Record<string, string>
     finally { setSending(false); }
   }
 
-  return <section className="guestbook" id="guestbook">
+  const visibleEntries = compact ? entries.slice(0, 3) : entries;
+  const form = <form className="guestbook-form" onSubmit={submit}>
+    <label>{t("guestbookNicknameLabel", "署名（可选）")}<input value={nickname} maxLength={20} onChange={(e) => setNickname(e.target.value)} placeholder={t("guestbookNicknamePlaceholder", "匿名访客")} /></label>
+    <label>{t("guestbookMessageLabel", "留言")}<textarea value={message} maxLength={240} required onChange={(e) => setMessage(e.target.value)} placeholder={t("guestbookMessagePlaceholder", "写下你的话…")} rows={4} /></label>
+    <div><small>{message.length}/240</small><button className="primary-action" disabled={sending} type="submit">{sending ? t("guestbookSending", "发送中…") : t("guestbookSubmit", "发布留言")}</button></div>
+    {status && <p className="guestbook-status">{status}</p>}
+  </form>;
+
+  return <section className={`guestbook ${compact ? "guestbook-compact" : ""}`} id="guestbook">
     <div className="guestbook-intro"><p className="micro-label">{t("guestbookEyebrow", "MESSAGE BOARD")}</p><h2>{t("guestbookTitle", "留一页话")}</h2><p>{t("guestbookLead", "可以聊卡牌、分享抽卡感受，或留下想看的内容。")}</p></div>
-    <form className="guestbook-form" onSubmit={submit}>
-      <label>{t("guestbookNicknameLabel", "署名（可选）")}<input value={nickname} maxLength={20} onChange={(e) => setNickname(e.target.value)} placeholder={t("guestbookNicknamePlaceholder", "匿名访客")} /></label>
-      <label>{t("guestbookMessageLabel", "留言")}<textarea value={message} maxLength={240} required onChange={(e) => setMessage(e.target.value)} placeholder={t("guestbookMessagePlaceholder", "写下你的话…")} rows={4} /></label>
-      <div><small>{message.length}/240</small><button className="primary-action" disabled={sending} type="submit">{sending ? t("guestbookSending", "发送中…") : t("guestbookSubmit", "发布留言")}</button></div>
-      {status && <p className="guestbook-status">{status}</p>}
-    </form>
+    <p className="guestbook-public-note">留言会公开显示，请使用昵称，并避免写联系方式、私人对话或他人隐私。</p>
+    {compact ? <details className="guestbook-compose"><summary>想留一句话</summary>{form}</details> : form}
     <div className="guestbook-list">
-      {entries.map((entry) => <article key={entry.id}><div><b>{entry.nickname}</b><time>{new Date(entry.createdAt).toLocaleDateString("zh-CN", { month: "numeric", day: "numeric" })}</time></div><p>{entry.message}</p></article>)}
+      {visibleEntries.map((entry) => <article key={entry.id}><div><b>{entry.nickname}</b><time>{new Date(entry.createdAt).toLocaleDateString("zh-CN", { month: "numeric", day: "numeric" })}</time></div><p>{entry.message}</p></article>)}
       {!entries.length && !status && <p className="guestbook-empty">{t("guestbookEmpty", "还没有留言。你可以写第一条。")}</p>}
     </div>
   </section>;
