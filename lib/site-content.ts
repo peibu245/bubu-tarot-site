@@ -57,10 +57,10 @@ export const defaultContent: SiteContent = {
   contactChannels: defaultContactChannels,
   policies: defaultPolicies,
   prices: [
-    { id: "reality-first", section: "现实问题咨询", title: "新客单问", description: "首次预约现实问题咨询可用。1个明确问题，通常抽取3–5张牌；包含一次原题范围内的补充说明。每人限购一次。", price: "60", unit: "元 / 1问", badge: "FIRST READING", visible: true, featured: false },
-    { id: "reality-one", section: "现实问题咨询", title: "常规单问", description: "1个独立问题，通常抽取3–5张牌。结合必要背景、牌位和整组关系进行解读。", price: "88", unit: "元 / 1问", badge: "ONE QUESTION", visible: true, featured: false },
-    { id: "reality-deep", section: "现实问题咨询", title: "1–3问深入解析", description: "针对1–3个明确问题进行深入解析，按复杂度安排牌阵。问题跨度较大时，会在接单前确认是否需要拆分。", price: "188", unit: "元 / 1–3问", badge: "DEEP READING", visible: true, featured: true },
-    { id: "reality-custom", section: "现实问题咨询", title: "综合大牌阵", description: "用于人物关系复杂、信息量较大，或需要比较多条发展路径的主题。先梳理背景和核心问题，以大牌阵建立整体结构，再用小牌阵补充关键细节；可按需要组合韦特、透特、马赛、雷诺曼等体系进行交叉参照。接单前确认解读范围，包含一次原主题内的补充说明。", price: "518", unit: "元 / 复杂主题", badge: "CUSTOM SPREAD", visible: true, featured: false },
+    { id: "reality-first", section: "现实问题咨询", title: "新客单问", description: "首次预约现实问题咨询可用。1个明确问题，通常抽取3–5张牌；包含一次原题范围内的补充说明。每人限购一次。", price: "60", unit: "元 / 1问", badge: "FIRST READING", delivery: "", turnaround: "", followUp: "", suitableFor: "", status: "available", visible: true, featured: false },
+    { id: "reality-one", section: "现实问题咨询", title: "常规单问", description: "1个独立问题，通常抽取3–5张牌。结合必要背景、牌位和整组关系进行解读。", price: "88", unit: "元 / 1问", badge: "ONE QUESTION", delivery: "", turnaround: "", followUp: "", suitableFor: "", status: "available", visible: true, featured: false },
+    { id: "reality-deep", section: "现实问题咨询", title: "1–3问深入解析", description: "针对1–3个明确问题进行深入解析，按复杂度安排牌阵。问题跨度较大时，会在接单前确认是否需要拆分。", price: "188", unit: "元 / 1–3问", badge: "DEEP READING", delivery: "", turnaround: "", followUp: "", suitableFor: "", status: "available", visible: true, featured: true },
+    { id: "reality-custom", section: "现实问题咨询", title: "综合大牌阵", description: "用于人物关系复杂、信息量较大，或需要比较多条发展路径的主题。先梳理背景和核心问题，以大牌阵建立整体结构，再用小牌阵补充关键细节；可按需要组合韦特、透特、马赛、雷诺曼等体系进行交叉参照。接单前确认解读范围，包含一次原主题内的补充说明。", price: "518", unit: "元 / 复杂主题", badge: "CUSTOM SPREAD", delivery: "", turnaround: "", followUp: "", suitableFor: "", status: "available", visible: true, featured: false },
   ],
   promotions: [
     { id: "hundred", scope: "全站", title: "100人免费卡牌解读挑战", description: "不定期抽取体验名额；具体方式以不不当期发布为准。", badge: "LIMITED", startsAt: "", endsAt: "", active: true },
@@ -275,6 +275,11 @@ function cleanPrice(value: unknown, index: number): PriceItem {
     price: text(item.price, 24) || "待定",
     unit: text(item.unit, 30),
     badge: text(item.badge, 32),
+    delivery: text(item.delivery, 80),
+    turnaround: text(item.turnaround, 80),
+    followUp: text(item.followUp, 120),
+    suitableFor: text(item.suitableFor, 160),
+    status: item.status === "paused" || item.status === "waitlist" ? item.status : "available",
     visible: item.visible !== false,
     featured: item.featured === true,
   };
