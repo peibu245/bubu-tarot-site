@@ -7,6 +7,7 @@ import ContactPolicyEditor from "./ContactPolicyEditor";
 import PageCopyStudio from "./PageCopyStudio";
 import GuestbookManager from "./GuestbookManager";
 import HistoryPanel from "./HistoryPanel";
+import CollapsiblePanel from "./CollapsiblePanel";
 
 const makeId = (prefix: string) => `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
 const cardLabels = new Map([...rwsCards, ...lenormandCards].map((card) => [card.id, `${card.number ? `${card.number} · ` : ""}${card.name}`]));
@@ -61,19 +62,19 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
 
   return (
     <div className="editor">
-      <section className="editor-section compact-editor">
+      <CollapsiblePanel label="01 / BOOKING" title="接单状态与预约说明" defaultOpen><section className="editor-section compact-editor">
         <div className="editor-title"><div><span>01 / STATUS</span><h2>接单状态与说明</h2></div><label className="switch-row"><input type="checkbox" checked={content.bookingsOpen} onChange={(event) => setContent({ ...content, bookingsOpen: event.target.checked })} /><i /><b>{content.bookingsOpen ? "开放预约" : "暂不接单"}</b></label></div>
         <label>梦向解读价格说明<textarea value={content.dreamPriceNotice} onChange={(event) => setContent({ ...content, dreamPriceNotice: event.target.value })} rows={2} /></label>
         <label>现实问题咨询价格说明<textarea value={content.priceNotice} onChange={(event) => setContent({ ...content, priceNotice: event.target.value })} rows={2} /></label>
         <label>预约方式说明<textarea value={content.contactNote} onChange={(event) => setContent({ ...content, contactNote: event.target.value })} rows={2} /></label>
         <p className="manager-hint">微信、闲鱼和其他预约入口已移动到下方“联系方式”区域；公开页面不会再直接显示旧的单一预约链接。</p>
-      </section>
+      </section></CollapsiblePanel>
 
       <PageCopyStudio content={content} setContent={setContent} />
 
       <HistoryPanel setContent={setContent} />
 
-      <section className="editor-section compact-editor">
+      <CollapsiblePanel label="04 / DISPLAY" title="文字排版"><section className="editor-section compact-editor">
         <div className="editor-title"><div><span>04 / TYPE</span><h2>文字排版</h2></div></div>
         <p className="manager-hint">这三项只影响公开页面的正文和说明文字；标题仍保持现在的大黑体风格。你觉得字间距紧，可以先把“字间距”设为 0.04 或 0.05。</p>
         <div className="form-grid typography-grid">
@@ -81,11 +82,11 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
           <label>字间距 <output>{content.typography.letterSpacing.toFixed(3)}em</output><input type="range" min="0" max="0.12" step="0.005" value={content.typography.letterSpacing} onChange={(event) => setContent({ ...content, typography: { ...content.typography, letterSpacing: Number(event.target.value) } })} /></label>
           <label>正文行距 <output>{content.typography.lineHeight.toFixed(2)}</output><input type="range" min="1.5" max="2.25" step="0.05" value={content.typography.lineHeight} onChange={(event) => setContent({ ...content, typography: { ...content.typography, lineHeight: Number(event.target.value) } })} /></label>
         </div>
-      </section>
+      </section></CollapsiblePanel>
 
       <ContactPolicyEditor content={content} setContent={setContent} />
 
-      <section className="editor-section">
+      <CollapsiblePanel label="07 / SERVICES" title="服务项目与定价" defaultOpen><section className="editor-section">
         <div className="editor-title"><div><span>07 / SERVICES</span><h2>服务项目与定价</h2></div></div>
         <div className="editor-price-groups">
           {priceGroups.map((group) => {
@@ -121,9 +122,9 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
             );
           })}
         </div>
-      </section>
+      </section></CollapsiblePanel>
 
-      <section className="editor-section">
+      <CollapsiblePanel label="08 / OFFERS" title="优惠活动"><section className="editor-section">
         <div className="editor-title"><div><span>08 / OFFERS</span><h2>优惠活动</h2></div><button className="admin-add" type="button" onClick={addPromo}>＋ 添加活动</button></div>
         <div className="editor-cards promo-editors">
           {content.promotions.map((item, index) => (
@@ -141,26 +142,26 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
             </article>
           ))}
         </div>
-      </section>
+      </section></CollapsiblePanel>
 
-      <section className="editor-section">
+      <CollapsiblePanel label="09 / CONTENT" title="Tips 横幅"><section className="editor-section">
         <div className="editor-title"><div><span>09 / TIPS</span><h2>Tips 横幅</h2></div><button className="admin-add" type="button" onClick={addKnowledge}>＋ 添加 Tips</button></div>
         <p className="manager-hint">这里已经不再是“知识牌堆”。访客点“换一个”时会按洗牌后的顺序轮播：这一轮尽量全部看过后才重新打乱。</p>
         <div className="editor-cards knowledge-editors">{content.knowledgeCards.map((item, index) => <article className="editor-card" key={item.id}><div className="card-admin-top"><b>Tips #{String(index + 1).padStart(2, "0")}</b><button type="button" onClick={() => setContent((current) => ({ ...current, knowledgeCards: current.knowledgeCards.filter((card) => card.id !== item.id) }))}>删除</button></div><div className="form-grid"><label>小标签<input value={item.tag} onChange={(event) => patchKnowledge(item.id, { tag: event.target.value })} /></label><label>短标题<input value={item.title} onChange={(event) => patchKnowledge(item.id, { title: event.target.value })} placeholder="可留空" /></label><label className="wide">Tips 内容<textarea rows={3} value={item.body} onChange={(event) => patchKnowledge(item.id, { body: event.target.value })} /></label></div><div className="check-row"><label><input type="checkbox" checked={item.visible} onChange={(event) => patchKnowledge(item.id, { visible: event.target.checked })} /> 对访客显示</label></div></article>)}</div>
-      </section>
+      </section></CollapsiblePanel>
 
-      <section className="editor-section">
+      <CollapsiblePanel label="10 / CARD DETAILS" title="牌面细节"><section className="editor-section">
         <div className="editor-title"><div><span>10 / CARD DETAILS</span><h2>“你知道吗？”牌面细节</h2></div><button className="admin-add" type="button" onClick={addFact}>＋ 给这张牌加细节</button></div>
         <p className="manager-hint">这里不是传统牌义词典。优先写牌面上真实存在、平时容易忽略的东西；也可以为同一张牌增加多条，访客会先看完这一轮再重复。</p>
         <div className="form-grid"><label>筛选牌系<select value={factDeck} onChange={(event) => setFactDeck(event.target.value as "all" | "rws" | "lenormand")}><option value="all">全部</option><option value="rws">韦特–史密斯</option><option value="lenormand">雷诺曼</option></select></label><label>搜索牌名 / ID<input value={factQuery} onChange={(event) => setFactQuery(event.target.value)} placeholder="例如 愚人、女祭司、lenormand-1" /></label><label className="wide">新增细节给哪张牌<select value={factAddCard} onChange={(event) => setFactAddCard(event.target.value)}><optgroup label="韦特–史密斯">{rwsCards.map((card) => <option key={card.id} value={card.id}>{cardLabels.get(card.id) || card.name}</option>)}</optgroup><optgroup label="雷诺曼">{lenormandCards.map((card) => <option key={card.id} value={card.id}>{cardLabels.get(card.id) || card.name}</option>)}</optgroup></select></label></div>
         <div className="editor-cards knowledge-editors">{content.cardFacts.filter((fact) => factDeck === "all" || fact.deck === factDeck).filter((fact) => { const q = factQuery.trim().toLowerCase(); return !q || fact.cardId.toLowerCase().includes(q) || (cardLabels.get(fact.cardId) || "").toLowerCase().includes(q); }).map((fact, index) => <article className="editor-card" key={fact.id}><div className="card-admin-top"><b>{cardLabels.get(fact.cardId) || fact.cardId} · #{index + 1}</b><div><span>{fact.deck === "rws" ? "RWS" : "LENORMAND"}</span><button type="button" onClick={() => setContent((current) => ({ ...current, cardFacts: current.cardFacts.filter((row) => row.id !== fact.id) }))}>删除</button></div></div><label>细节内容<textarea rows={4} value={fact.text} onChange={(event) => patchFact(fact.id, { text: event.target.value })} /></label><div className="check-row"><label><input type="checkbox" checked={fact.visible} onChange={(event) => patchFact(fact.id, { visible: event.target.checked })} /> 对访客显示</label></div></article>)}</div>
-      </section>
+      </section></CollapsiblePanel>
 
-      <section className="editor-section">
+      <CollapsiblePanel label="11 / SPREADS" title="牌阵小册"><section className="editor-section">
         <div className="editor-title"><div><span>11 / SPREAD NOTES</span><h2>牌阵小册</h2></div><button className="admin-add" type="button" onClick={addSpread}>＋ 添加牌阵</button></div>
         <p className="manager-hint">公开页先分成“塔罗牌阵 / 雷诺曼牌阵”两个区。每个牌阵可以选择所属体系和示意图；牌位每行一条。</p>
         <div className="editor-cards">{content.spreadGuides.map((spread, index) => <article className="editor-card" key={spread.id}><div className="card-admin-top"><b>牌阵 #{String(index + 1).padStart(2, "0")}</b><button type="button" onClick={() => setContent((current) => ({ ...current, spreadGuides: current.spreadGuides.filter((row) => row.id !== spread.id) }))}>删除</button></div><div className="form-grid"><label>所属体系<select value={spread.system} onChange={(event) => patchSpread(spread.id, { system: event.target.value as SpreadGuide["system"] })}><option value="tarot">塔罗</option><option value="lenormand">雷诺曼</option></select></label><label>名称<input value={spread.title} onChange={(event) => patchSpread(spread.id, { title: event.target.value })} /></label><label>一句小注<input value={spread.subtitle} onChange={(event) => patchSpread(spread.id, { subtitle: event.target.value })} /></label><label>示意图<select value={spread.layout} onChange={(event) => patchSpread(spread.id, { layout: event.target.value as SpreadGuide["layout"] })}><option value="line3">三张横排</option><option value="timeline3">时间三张</option><option value="choice5">A/B 选择</option><option value="relationship5">双人关系</option><option value="inner5">内心五张</option><option value="celtic10">凯尔特十字</option><option value="line5">五张横排</option><option value="grid9">3×3 九宫格</option><option value="grandtableau36">Grand Tableau 4×9</option></select></label><label className="wide">简介<textarea rows={2} value={spread.summary} onChange={(event) => patchSpread(spread.id, { summary: event.target.value })} /></label><label className="wide">适合<textarea rows={2} value={spread.bestFor} onChange={(event) => patchSpread(spread.id, { bestFor: event.target.value })} /></label><label className="wide">不太适合<textarea rows={2} value={spread.avoidFor} onChange={(event) => patchSpread(spread.id, { avoidFor: event.target.value })} /></label><label className="wide">牌位（每行一条）<textarea rows={6} value={spread.positions.join("\n")} onChange={(event) => patchSpread(spread.id, { positions: event.target.value.split("\n").filter((row) => row.trim()) })} /></label><label className="wide">怎么串起来看<textarea rows={3} value={spread.relation} onChange={(event) => patchSpread(spread.id, { relation: event.target.value })} /></label></div><div className="check-row"><label><input type="checkbox" checked={spread.visible} onChange={(event) => patchSpread(spread.id, { visible: event.target.checked })} /> 对访客显示</label></div></article>)}</div>
-      </section>
+      </section></CollapsiblePanel>
       <GuestbookManager />
 
       <div className="save-bar"><p>{state === "saved" ? "已保存，公开页面已经更新。" : state === "error" ? "保存失败，请稍后重试。" : "修改只会在点击保存后公开。"}</p><a href="/" target="_blank" rel="noreferrer">查看公开页 ↗</a><button type="button" disabled={state === "saving"} onClick={save}>{state === "saving" ? "保存中…" : "保存并发布"}</button></div>
