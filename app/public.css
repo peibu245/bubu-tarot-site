@@ -1062,6 +1062,10 @@ body { font-size:16px; line-height:1.7; }
 .guestbook-compose .guestbook-form input,.guestbook-compose .guestbook-form textarea { margin-top:9px; }
 .guestbook-compact .guestbook-list { margin-top:0; }
 .mobile-menu-toggle,.mobile-menu-layer,.mobile-bottom-actions { display:none; }
+.public-page,.public-page * { font-family:var(--reader-body-font,var(--sans))!important; }
+.public-page :where(h1,h2,h3,h4),.public-page .public-brand span { font-family:var(--reader-heading-font,var(--sans))!important; font-weight:var(--reader-heading-weight,600)!important; }
+.public-page :where(p,li,dd,dt,blockquote) { font-weight:var(--reader-body-weight,400); }
+.public-header *,.public-page :where(button,input,textarea,select,label,.micro-label,.status-pill,.service-status,.service-card-meta,.booking-entry-meta,.card-link,.footer-column) { font-family:var(--reader-ui-font,var(--sans))!important; }
 .public-header { display:block; padding-right:clamp(24px,4vw,64px); padding-left:clamp(24px,4vw,64px); }
 .public-header-inner { width:min(1440px,100%); height:100%; margin:0 auto; display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:36px; }
 .public-header-inner .public-nav { justify-self:center; }

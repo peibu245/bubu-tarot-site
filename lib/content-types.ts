@@ -63,7 +63,14 @@ export type SpreadGuide = {
   visible: boolean;
 };
 
+export type FontChoice = "clean-sans" | "soft-sans" | "book-serif" | "rounded";
+
 export type TypographySettings = {
+  headingFont: FontChoice;
+  bodyFont: FontChoice;
+  uiFont: FontChoice;
+  headingWeight: number;
+  bodyWeight: number;
   bodyScale: number;
   letterSpacing: number;
   lineHeight: number;

@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import type { TypographySettings } from "../lib/content-types";
+import { fontStack } from "../lib/typography";
 
 type DraftMessage = {
   type: "bubu-preview:update";
@@ -81,6 +82,11 @@ export default function StudioPreviewBridge() {
         const root = document.querySelector<HTMLElement>(".public-page");
         if (root) {
           const scale = Math.min(1.2, Math.max(.9, message.typography.bodyScale));
+          root.style.setProperty("--reader-heading-font", fontStack(message.typography.headingFont));
+          root.style.setProperty("--reader-body-font", fontStack(message.typography.bodyFont));
+          root.style.setProperty("--reader-ui-font", fontStack(message.typography.uiFont));
+          root.style.setProperty("--reader-heading-weight", String(Math.min(800, Math.max(400, message.typography.headingWeight))));
+          root.style.setProperty("--reader-body-weight", String(Math.min(600, Math.max(300, message.typography.bodyWeight))));
           root.style.setProperty("--reader-copy-size-offset", `${Math.round((scale - 1) * 160) / 10}px`);
           root.style.setProperty("--reader-copy-letter-spacing", `${Math.min(.12, Math.max(0, message.typography.letterSpacing))}em`);
           root.style.setProperty("--reader-copy-line-height", String(Math.min(2.25, Math.max(1.5, message.typography.lineHeight))));

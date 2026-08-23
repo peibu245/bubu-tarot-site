@@ -3,6 +3,7 @@ import { dirname, join } from "node:path";
 import type { CardFact, ContactChannel, KnowledgeCard, PolicySettings, PriceItem, Promotion, RichContentBlock, SiteContent, SpreadGuide, TypographySettings } from "./content-types";
 import { defaultContactChannels, defaultPolicies } from "./legal-defaults";
 import { defaultCardFacts, defaultSpreadGuides } from "./educational-defaults";
+import { defaultTypography, isFontChoice } from "./typography";
 
 const CONTENT_VERSION = 14;
 
@@ -84,7 +85,7 @@ export const defaultContent: SiteContent = {
   spreadGuides: defaultSpreadGuides,
   pageText: defaultPageText,
   richBlocks: [],
-  typography: { bodyScale: 1, letterSpacing: 0.035, lineHeight: 1.85 },
+  typography: { ...defaultTypography },
 };
 
 function isFileError(error: unknown, code: string): boolean {
@@ -456,7 +457,16 @@ function numberWithin(value: unknown, fallback: number, min: number, max: number
 
 function cleanTypography(value: unknown): TypographySettings {
   const source = value && typeof value === "object" ? value as Partial<TypographySettings> : {};
-  return { bodyScale: numberWithin(source.bodyScale, 1, 0.9, 1.2), letterSpacing: numberWithin(source.letterSpacing, 0.035, 0, 0.12), lineHeight: numberWithin(source.lineHeight, 1.85, 1.5, 2.25) };
+  return {
+    headingFont: isFontChoice(source.headingFont) ? source.headingFont : defaultTypography.headingFont,
+    bodyFont: isFontChoice(source.bodyFont) ? source.bodyFont : defaultTypography.bodyFont,
+    uiFont: isFontChoice(source.uiFont) ? source.uiFont : defaultTypography.uiFont,
+    headingWeight: numberWithin(source.headingWeight, defaultTypography.headingWeight, 400, 800),
+    bodyWeight: numberWithin(source.bodyWeight, defaultTypography.bodyWeight, 300, 600),
+    bodyScale: numberWithin(source.bodyScale, 1, 0.9, 1.2),
+    letterSpacing: numberWithin(source.letterSpacing, defaultTypography.letterSpacing, 0, 0.12),
+    lineHeight: numberWithin(source.lineHeight, 1.85, 1.5, 2.25),
+  };
 }
 
 export function cleanContent(value: unknown): SiteContent {
