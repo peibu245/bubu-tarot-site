@@ -1071,8 +1071,31 @@ body { font-size:16px; line-height:1.7; }
 .public-header-inner { width:min(1440px,100%); height:100%; margin:0 auto; display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:36px; }
 .public-header-inner .public-nav { justify-self:center; }
 
+/* Final storefront polish: keep the path to contact compact and calm. */
+#services,#contact,#guestbook { scroll-margin-top:96px; }
+.public-page :where(h1,h2,h3) { text-wrap:balance; }
+.public-page :where(a,button,input,textarea,select):focus-visible { outline:3px solid rgba(111,79,150,.34); outline-offset:3px; }
+.home-hero { min-height:620px; padding:76px clamp(24px,7vw,112px) 72px; grid-template-columns:1.08fr .82fr; gap:clamp(48px,7vw,104px); }
+.home-hero h1 { max-width:820px; margin-bottom:14px; font-size:clamp(58px,7.2vw,104px); line-height:1.02; }
+.home-deckline { margin-bottom:22px; }
+.home-lead { margin-bottom:18px; }
+.reader-card { min-height:452px; padding:25px 28px 28px; border-radius:28px; }
+.reader-avatar { width:150px; height:150px; margin:40px 0 22px; }
+.reader-card>p { margin-bottom:26px; }
+.home-section { padding-top:88px; padding-bottom:88px; }
+.clean-heading { margin-bottom:36px; }
+.service-card { min-height:385px; padding:25px; }
+.service-card h3 { font-size:44px; line-height:1.12; }
+.service-card strong { font-size:17px; }
+.service-card p { font-size:14px; }
+.about-section { padding-top:92px; padding-bottom:92px; }
+.guestbook-compact { padding-top:72px; padding-bottom:72px; }
+.booking-banner { min-height:280px; padding-top:58px; padding-bottom:58px; }
+
 @media (max-width:1000px) {
   .public-header-inner { grid-template-columns:minmax(0,1fr) auto; gap:16px; }
+  .home-hero { grid-template-columns:1fr; gap:48px; }
+  .reader-card { width:min(520px,100%); }
 }
 
 @media (max-width:760px) {
@@ -1092,9 +1115,23 @@ body { font-size:16px; line-height:1.7; }
   .mobile-bottom-actions a { min-height:44px; display:grid; place-items:center; border-radius:11px; background:#f1e9f2; color:#604c69; font-size:13px; font-weight:700; }
   .mobile-bottom-actions a:last-child { background:#70507e; color:#fff; }
   .public-page { padding-bottom:calc(82px + env(safe-area-inset-bottom)); }
+  #services,#contact,#guestbook { scroll-margin-top:82px; }
+  .home-hero { padding:52px 20px 48px; gap:36px; }
+  .home-hero h1 { max-width:100%; font-size:clamp(50px,15.5vw,60px); line-height:1.06; }
+  .home-deckline { margin-bottom:16px; }
+  .home-actions { gap:18px; }
+  .reader-card { min-height:0; padding:22px 21px 24px; border-radius:24px; }
+  .reader-avatar { width:128px; height:128px; margin:32px 0 20px; }
+  .reader-card h2 { font-size:32px; }
+  .home-section { padding-top:64px; padding-bottom:64px; }
+  .clean-heading { margin-bottom:28px; }
+  .service-card { min-height:310px; padding:22px; }
+  .service-card h3 { font-size:36px; }
+  .about-section { padding-top:70px; padding-bottom:70px; }
   .home-reassurance,.booking-reassurance,.contact-reassurance { font-size:13px; }
-  .guestbook-compact { padding:60px 20px; }
+  .guestbook-compact { padding:58px 20px; }
   .guestbook-compose .guestbook-form { padding:18px; }
   .guestbook-public-note { font-size:11px; }
+  .booking-banner { min-height:0; padding-top:52px; padding-bottom:52px; }
 }
 
