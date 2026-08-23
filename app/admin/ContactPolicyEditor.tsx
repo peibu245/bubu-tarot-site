@@ -2,6 +2,7 @@
 
 import { useState, type Dispatch, type SetStateAction } from "react";
 import type { ContactChannel, SiteContent } from "../../lib/content-types";
+import CollapsiblePanel from "./CollapsiblePanel";
 
 const makeId = () => `contact-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
 
@@ -43,7 +44,7 @@ export default function ContactPolicyEditor({ content, setContent }: { content: 
 
   return (
     <>
-      <section className="editor-section">
+      <CollapsiblePanel label="05 / CONTACT" title="联系方式中心"><section className="editor-section">
         <div className="editor-title"><div><span>05 / CONTACT</span><h2>联系方式中心</h2></div><button className="admin-add" type="button" onClick={addChannel}>＋ 添加渠道</button></div>
         <p className="manager-hint">访客完成预约须知确认后，会先看到一个简洁的平台按钮列表，点某个平台才弹出账号、外链和二维码。手机端可以复制账号、保存二维码；二维码支持在这里直接上传替换。</p>
         {uploadError && <p className="admin-inline-error">二维码上传失败：{uploadError}</p>}
@@ -69,9 +70,9 @@ export default function ContactPolicyEditor({ content, setContent }: { content: 
             </article>
           ))}
         </div>
-      </section>
+      </section></CollapsiblePanel>
 
-      <section className="editor-section policy-editor-section">
+      <CollapsiblePanel label="06 / POLICIES" title="预约政策与版本"><section className="editor-section policy-editor-section">
         <div className="editor-title"><div><span>06 / POLICIES</span><h2>预约政策与版本</h2></div></div>
         <p className="manager-hint">如果你对服务边界、隐私处理或退款条件做了实质性修改，请同时提高“政策版本”，例如 V1.0 → V1.1。访客浏览器检测到新版本后会重新要求确认。</p>
         <div className="form-grid policy-meta-grid">
@@ -86,7 +87,7 @@ export default function ContactPolicyEditor({ content, setContent }: { content: 
           <label><span>隐私政策</span><small>收集内容、使用目的、第三人信息、本地确认记录</small><textarea rows={18} value={content.policies.privacy} onChange={(event) => patchPolicy("privacy", event.target.value)} /></label>
           <label><span>退款规则</span><small>未开始、进行中、已交付、第三方平台交易</small><textarea rows={16} value={content.policies.refund} onChange={(event) => patchPolicy("refund", event.target.value)} /></label>
         </div>
-      </section>
+      </section></CollapsiblePanel>
     </>
   );
 }
