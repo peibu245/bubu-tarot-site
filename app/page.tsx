@@ -46,7 +46,7 @@ export default async function Home() {
     ["02", "homeMethod2Title", "homeMethod2Text"],
     ["03", "homeMethod3Title", "homeMethod3Text"],
   ];
-  const notes = [1, 2, 3].map((number) => ({ tag: t(`homeNote${number}Tag`), title: t(`homeNote${number}Title`), copy: t(`homeNote${number}Text`), href: "/notes" }));
+  
 
   return (
     <main className="public-page">
@@ -124,19 +124,6 @@ export default async function Home() {
         </section>
       )}
 
-      <section className="home-section notes-preview">
-        <div className="clean-heading compact-heading">
-          <div><p className="micro-label">{t("homeNotesEyebrow")}</p><h2>{t("homeNotesTitle")}</h2></div>
-          <Link href="/notes">{t("homeNotesLink")}</Link>
-        </div>
-        <div className="note-card-grid">
-          {notes.map((note) => (
-            <Link className="note-card" href={note.href} key={note.title}>
-              <span>{note.tag}</span><h3>{note.title}</h3><p className="editable-copy">{note.copy}</p><b>{t("homeNoteLink")}</b>
-            </Link>
-          ))}
-        </div>
-      </section>
 
       <section className="booking-banner">
         <div><p className="micro-label">{t("homeBookingEyebrow")}</p><h2>{t("homeBookingTitle")}</h2><p className="editable-copy">{content.contactNote}</p></div>
