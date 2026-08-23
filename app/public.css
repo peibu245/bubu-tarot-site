@@ -1050,13 +1050,17 @@ body { font-size:16px; line-height:1.7; }
 .home-reassurance { max-width:36rem; padding-left:13px; border-left:2px solid #aa8ab7; }
 .booking-reassurance { max-width:42rem; }
 .contact-reassurance { max-width:42rem; margin:0 0 22px; color:#5c5362; }
-.guestbook-compact { padding:82px clamp(24px,8vw,130px); background:#fbf8f5; }
+.guestbook-compact { display:block; padding:82px clamp(24px,8vw,130px); background:#fbf8f5; }
+.guestbook-compact .guestbook-intro,.guestbook-compact .guestbook-public-note,.guestbook-compact .guestbook-compose { width:min(760px,100%); }
 .guestbook-compact .guestbook-intro { max-width:620px; }
 .guestbook-public-note { margin:16px 0 0; color:#766b78; font-size:12px; line-height:1.7; }
-.guestbook-compose { margin:26px 0 30px; padding:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.guestbook-compose { margin:26px 0 34px; padding:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
 .guestbook-compose summary { padding:17px 0; color:#5f4e68; font-weight:700; cursor:pointer; }
 .guestbook-compose[open] summary { border-bottom:1px solid var(--line); }
-.guestbook-compose .guestbook-form { padding:20px 0; }
+.guestbook-compose .guestbook-form { margin:18px 0; padding:24px; }
+.guestbook-compose .guestbook-form label { margin-bottom:20px; }
+.guestbook-compose .guestbook-form input,.guestbook-compose .guestbook-form textarea { margin-top:9px; }
+.guestbook-compact .guestbook-list { margin-top:0; }
 .mobile-menu-toggle,.mobile-menu-layer,.mobile-bottom-actions { display:none; }
 
 @media (max-width:760px) {
@@ -1077,6 +1081,7 @@ body { font-size:16px; line-height:1.7; }
   .public-page { padding-bottom:82px; }
   .home-reassurance,.booking-reassurance,.contact-reassurance { font-size:13px; }
   .guestbook-compact { padding:60px 20px; }
+  .guestbook-compose .guestbook-form { padding:18px; }
   .guestbook-public-note { font-size:11px; }
 }
 
