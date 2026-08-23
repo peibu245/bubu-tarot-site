@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import type { SiteContent } from "../../lib/content-types";
+import CollapsiblePanel from "./CollapsiblePanel";
 
 type Revision = { id: string; createdAt: string; updatedBy: string };
 
@@ -53,7 +54,7 @@ export default function HistoryPanel({ setContent }: { setContent: Dispatch<SetS
   }
 
   return (
-    <section className="editor-section history-panel">
+    <CollapsiblePanel label="03 / HISTORY" title="历史版本与回滚"><section className="editor-section history-panel">
       <div className="editor-title"><div><span>03 / HISTORY</span><h2>历史版本与回滚</h2></div><button className="admin-add" type="button" onClick={() => void load()} disabled={state === "loading"}>刷新版本</button></div>
       <p className="manager-hint">每次发布前都会先保存上一版。这里最多保留最近 30 个版本；恢复某一版时，当前版本也会先备份，因此可以反悔。</p>
       {message && <p className={state === "error" ? "history-message is-error" : "history-message"}>{message}</p>}
@@ -65,6 +66,6 @@ export default function HistoryPanel({ setContent }: { setContent: Dispatch<SetS
           </article>
         )) : <p className="editor-empty">{state === "loading" ? "正在读取历史版本…" : "目前还没有历史版本。第一次修改并发布后，这里就会开始记录。"}</p>}
       </div>
-    </section>
+    </section></CollapsiblePanel>
   );
 }
