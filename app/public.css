@@ -130,6 +130,12 @@ button,input,textarea,select { font:inherit; }
 .booking-price-top h3 { margin:8px 0 4px; font:600 24px ui-serif,"Songti SC",serif; }
 .booking-price-top small { color:#7d807d; font-size:9px; }
 .booking-price-card>p { max-width:650px; margin:21px 0 0; padding-top:19px; border-top:1px solid #ecece8; color:#5f635f; font-size:11px; line-height:1.85; }
+.service-meta { display:grid; grid-template-columns:42px 1fr; gap:7px 12px; margin:17px 0 0; padding-top:16px; border-top:1px solid #ecece8; color:#5f635f; font-size:11px; line-height:1.7; }
+.service-meta dt { color:#7d807d; }
+.service-meta dd { margin:0; }
+.service-status { display:inline-block; margin-top:16px; padding:5px 9px; border-radius:999px; background:#edf6f0; color:#39744f; font-size:10px; }
+.service-status.status-waitlist { background:#fbf3df; color:#88631e; }
+.service-status.status-paused { background:#f2eeee; color:#766a6a; }
 .booking-money { min-width:130px; display:grid; grid-template-columns:auto auto; justify-content:end; align-items:start; color:var(--ink); }
 .booking-money i { padding-top:5px; font:normal 15px ui-serif,serif; }
 .booking-money b { font:600 40px/1 ui-serif,serif; }
@@ -379,6 +385,8 @@ body { font-size:16px; line-height:1.7; }
 .booking-price-top h3 { font-size:27px; }
 .booking-price-top small { font-size:12px; }
 .booking-price-card>p { border-color:#e9dfee; color:#5d5661; font-size:15px; }
+.service-meta { border-color:#e9dfee; color:#5d5661; font-size:14px; }
+.service-meta dt { color:#887c8d; }
 .booking-money i { font-size:16px; }
 .booking-money b { font-size:43px; }
 .featured-note { background:var(--accent-soft); color:var(--accent-strong); font-size:11px; }
