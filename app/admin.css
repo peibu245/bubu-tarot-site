@@ -12,6 +12,13 @@
 .eyebrow.dark { color:var(--accent); }
 .editor { width:min(1180px,calc(100% - 44px)); margin:0 auto; }
 .editor-section { margin-bottom:30px; padding:38px; background:var(--white); border:1px solid var(--line); }
+.admin-panel { margin-bottom:18px; border:1px solid var(--line); background:var(--white); }
+.admin-panel>summary { min-height:80px; padding:19px 25px; display:flex; align-items:center; justify-content:space-between; gap:20px; cursor:pointer; list-style:none; }
+.admin-panel>summary::-webkit-details-marker { display:none; }
+.admin-panel>summary span { display:grid; gap:5px; }.admin-panel>summary small { color:var(--accent-strong); font-size:10px; font-weight:800; letter-spacing:.16em; }.admin-panel>summary b { font:600 23px ui-serif,"Songti SC",serif; }
+.admin-panel>summary i { width:11px; height:11px; border-right:2px solid var(--accent-strong); border-bottom:2px solid var(--accent-strong); transform:rotate(45deg) translateY(-3px); transition:transform .18s ease; }
+.admin-panel[open]>summary { border-bottom:1px solid var(--line); }.admin-panel[open]>summary i { transform:rotate(225deg) translate(-3px,-3px); }
+.admin-panel-content>.editor-section { margin:0; border:0; }
 .editor-title { margin-bottom:31px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
 .editor-title span { color:var(--accent); font-size:8px; font-weight:800; letter-spacing:.2em; }
 .editor-title h2 { margin:6px 0 0; font:600 29px ui-serif,"Songti SC",serif; }
@@ -67,6 +74,7 @@
   .admin-intro { padding:55px 20px 45px; }
   .editor { width:calc(100% - 24px); }
   .editor-section { padding:24px; }
+  .admin-panel>summary { min-height:70px; padding:16px 19px; }.admin-panel>summary b { font-size:20px; }
   .compact-editor { grid-template-columns:1fr; }
   .editor-title { align-items:flex-start; flex-direction:column; }
   .price-group-heading { align-items:flex-start; flex-direction:column; }
