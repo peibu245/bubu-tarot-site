@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { Dispatch, DragEvent, SetStateAction } from "react";
 import type { RichBlockKind, RichContentBlock, RichContentItem, SiteContent } from "../../lib/content-types";
 import { copyPages } from "../../lib/page-copy-schema";
+import CollapsiblePanel from "./CollapsiblePanel";
 
 const makeId = (prefix = "block") => `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
 
@@ -153,7 +154,7 @@ export default function PageCopyStudio({ content, setContent }: { content: SiteC
   }
 
   return (
-    <section className="editor-section copy-studio-section">
+    <CollapsiblePanel label="02 / COPY" title="页面文案与模块"><section className="editor-section copy-studio-section">
       <div className="editor-title studio-title">
         <div><span>02 / CONTENT STUDIO</span><h2>页面文案工作台</h2></div>
         <a className="admin-preview-link" href={activePage.path} target="_blank" rel="noreferrer">打开正式页面 ↗</a>
@@ -231,6 +232,6 @@ export default function PageCopyStudio({ content, setContent }: { content: SiteC
           </div>
         </div>
       </div>
-    </section>
+    </section></CollapsiblePanel>
   );
 }
