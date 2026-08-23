@@ -10,17 +10,20 @@ export function SiteHeader({ copy }: ChromeProps) {
     <>
       <StudioPreviewBridge />
       <header className="public-header">
-      <Link className="public-brand" href="/" aria-label="不不tarot首页">
-        <img src="/brand-mark.jpg" alt="" />
-        <span>{text(copy, "siteBrand", "不不tarot")}</span>
-      </Link>
-      <nav className="public-nav" aria-label="网站导航">
-        <Link href="/dream">{text(copy, "navDream", "梦向解读")}</Link>
-        <Link href="/reality">{text(copy, "navReality", "现实问题咨询")}</Link>
-        <Link href="/booking">{text(copy, "navBooking", "预约入口")}</Link>
-      </nav>
-      <Link className="header-booking" href="/booking">{text(copy, "navAction", "选择入口")}</Link>
-      <MobileNav copy={copy} />
+        <div className="public-header-inner">
+          <Link className="public-brand" href="/" aria-label="不不tarot首页">
+            <img src="/brand-mark.jpg" alt="" />
+            <span>{text(copy, "siteBrand", "不不tarot")}</span>
+          </Link>
+          <nav className="public-nav" aria-label="网站导航">
+            <Link href="/dream">{text(copy, "navDream", "梦向解读")}</Link>
+            <Link href="/reality">{text(copy, "navReality", "现实问题咨询")}</Link>
+            <Link href="/ideas">其他主题</Link>
+            <Link href="/policies">服务规则</Link>
+          </nav>
+          <Link className="header-booking" href="/booking#contact">联系咨询</Link>
+          <MobileNav copy={copy} />
+        </div>
       </header>
     </>
   );

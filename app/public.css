@@ -1062,9 +1062,17 @@ body { font-size:16px; line-height:1.7; }
 .guestbook-compose .guestbook-form input,.guestbook-compose .guestbook-form textarea { margin-top:9px; }
 .guestbook-compact .guestbook-list { margin-top:0; }
 .mobile-menu-toggle,.mobile-menu-layer,.mobile-bottom-actions { display:none; }
+.public-header { display:block; padding-right:clamp(24px,4vw,64px); padding-left:clamp(24px,4vw,64px); }
+.public-header-inner { width:min(1440px,100%); height:100%; margin:0 auto; display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:36px; }
+.public-header-inner .public-nav { justify-self:center; }
+
+@media (max-width:1000px) {
+  .public-header-inner { grid-template-columns:minmax(0,1fr) auto; gap:16px; }
+}
 
 @media (max-width:760px) {
-  .public-header { grid-template-columns:minmax(0,1fr) auto auto; gap:8px; min-height:calc(66px + env(safe-area-inset-top)); height:auto; padding:env(safe-area-inset-top) 16px 0; background:#fffdfa; backdrop-filter:none; }
+  .public-header { min-height:calc(66px + env(safe-area-inset-top)); height:auto; padding:env(safe-area-inset-top) 16px 0; background:#fffdfa; backdrop-filter:none; }
+  .public-header-inner { grid-template-columns:minmax(0,1fr) auto auto; gap:8px; }
   .public-brand { min-width:0; font-size:17px; }.public-brand span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .header-booking { min-height:40px; padding:0 12px; display:inline-grid; place-items:center; font-size:12px; white-space:nowrap; }
   .mobile-menu-toggle { min-width:42px; min-height:42px; padding:0; display:inline-grid; place-items:center; gap:1px; border:1px solid var(--line); border-radius:11px; background:#fffdfa; color:#584b60; font-size:10px; line-height:1.05; cursor:pointer; }
