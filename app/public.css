@@ -130,6 +130,9 @@ button,input,textarea,select { font:inherit; }
 .booking-price-top h3 { margin:8px 0 4px; font:600 24px ui-serif,"Songti SC",serif; }
 .booking-price-top small { color:#7d807d; font-size:9px; }
 .booking-price-card>p { max-width:650px; margin:21px 0 0; padding-top:19px; border-top:1px solid #ecece8; color:#5f635f; font-size:11px; line-height:1.85; }
+.service-card-cta { display:inline-flex; align-items:center; gap:8px; margin-top:18px; color:var(--accent-strong); font-size:13px; font-weight:700; }
+.service-card-cta span { transition:transform .2s ease; }
+.service-card-cta:hover span { transform:translateX(4px); }
 .service-meta { display:grid; grid-template-columns:42px 1fr; gap:7px 12px; margin:17px 0 0; padding-top:16px; border-top:1px solid #ecece8; color:#5f635f; font-size:11px; line-height:1.7; }
 .service-meta dt { color:#7d807d; }
 .service-meta dd { margin:0; }

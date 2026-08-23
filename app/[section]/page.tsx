@@ -51,9 +51,10 @@ const sections = {
   },
 } as const;
 
-function PriceCard({ item, featuredNote }: { item: PriceItem; featuredNote: string }) {
+function PriceCard({ item, featuredNote, bookingsOpen }: { item: PriceItem; featuredNote: string; bookingsOpen: boolean }) {
   const isNumber = /^\d+(?:\.\d+)?$/.test(item.price);
   const statusLabel = item.status === "paused" ? "暂不接单" : item.status === "waitlist" ? "可候补" : "开放预约";
+  const actionLabel = item.status === "waitlist" ? "了解候补方式" : "查看预约方式";
   return (
     <article className={item.featured ? "booking-price-card featured-price" : "booking-price-card"}>
       <div className="booking-price-top">
@@ -69,6 +70,7 @@ function PriceCard({ item, featuredNote }: { item: PriceItem; featuredNote: stri
       </dl>}
       <span className={`service-status status-${item.status}`}>{statusLabel}</span>
       {item.featured && <strong className="featured-note">{featuredNote}</strong>}
+      {bookingsOpen && item.status !== "paused" && <Link className="service-card-cta" href="/booking#contact">{actionLabel}<span aria-hidden="true">→</span></Link>}
     </article>
   );
 }
@@ -134,7 +136,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
               <section className="service-price-group" key={priceSection}>
                 <div className="service-price-heading"><h3>{sectionDisplayName(priceSection)}</h3><span>{groupPrices.length ? `${groupPrices.length} ${copy.itemCountSuffix || "个项目"}` : (copy.pricingPending || "定价中")}</span></div>
                 <div className="booking-price-list">
-                  {groupPrices.length ? groupPrices.map((item) => <PriceCard item={item} featuredNote={copy.featuredNote || "当前主推项目"} key={item.id} />) : (
+                  {groupPrices.length ? groupPrices.map((item) => <PriceCard item={item} featuredNote={copy.featuredNote || "当前主推项目"} bookingsOpen={content.bookingsOpen} key={item.id} />) : (
                     <div className="price-pending"><b>{sectionCopy.pendingTitle}</b><p>{priceSection === "传讯" ? sectionCopy.pendingMessage : sectionCopy.pendingDream}</p></div>
                   )}
                 </div>
