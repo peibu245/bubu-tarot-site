@@ -17,7 +17,6 @@ export function SiteHeader({ copy }: ChromeProps) {
         <Link href="/dream">{text(copy, "navDream", "梦向解读")}</Link>
         <Link href="/reality">{text(copy, "navReality", "现实问题咨询")}</Link>
         <Link href="/booking">{text(copy, "navBooking", "预约入口")}</Link>
-        <Link href="/notes">{text(copy, "navNotes", "抽一张")}</Link>
       </nav>
       <Link className="header-booking" href="/booking">{text(copy, "navAction", "选择入口")}</Link>
       </header>
@@ -45,7 +44,6 @@ export function SiteFooter({ copy }: ChromeProps) {
         <b>{text(copy, "footerBookingTitle", "预约")}</b>
         <Link href="/booking">{text(copy, "footerBookingLink", "价格与流程")}</Link>
         <Link href="/policies">{text(copy, "footerPoliciesLink", "条款与隐私")}</Link>
-        <Link href="/notes">{text(copy, "footerNotesLink", "预约前阅读")}</Link>
       </div>
       <p className="footer-copyright">{text(copy, "footerCopyright", "© 2026 不不tarot · 解读内容仅供个人参考与娱乐")}</p>
     </footer>
