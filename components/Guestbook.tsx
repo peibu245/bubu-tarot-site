@@ -43,7 +43,7 @@ export default function Guestbook({ copy = {}, compact = false }: { copy?: Recor
 
   return <section className={`guestbook ${compact ? "guestbook-compact" : ""}`} id="guestbook">
     <div className="guestbook-intro"><p className="micro-label">{t("guestbookEyebrow", "MESSAGE BOARD")}</p><h2>{t("guestbookTitle", "留一页话")}</h2><p>{t("guestbookLead", "可以聊卡牌、分享抽卡感受，或留下想看的内容。")}</p></div>
-    <p className="guestbook-public-note">留言会公开显示，请使用昵称，并避免写联系方式、私人对话或他人隐私。</p>
+    <p className="guestbook-public-note">留言会公开显示，请使用昵称，别写联系方式、私人对话或他人隐私，也请避免露骨、攻击性或引流内容。</p>
     {compact ? <details className="guestbook-compose"><summary>想留一句话</summary>{form}</details> : form}
     <div className="guestbook-list">
       {visibleEntries.map((entry) => <article key={entry.id}><div><b>{entry.nickname}</b><time>{new Date(entry.createdAt).toLocaleDateString("zh-CN", { month: "numeric", day: "numeric" })}</time></div><p>{entry.message}</p></article>)}
