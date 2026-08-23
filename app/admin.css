@@ -121,7 +121,7 @@
 .typography-presets b { font-size:14px; }.typography-presets span { color:#7b717e; font-size:11px; line-height:1.5; }
 .typography-preview { margin-bottom:18px; padding:26px; border:1px solid #d8cce0; border-radius:12px; background:linear-gradient(135deg,#fffdfa,#f3ebf5); }
 .typography-preview>span { color:#795886; font:800 9px/1 var(--preview-ui-font); letter-spacing:.18em; }
-.typography-preview h3 { margin:16px 0 9px; font-family:var(--preview-heading-font)!important; font-size:38px; font-weight:var(--preview-heading-weight); letter-spacing:-.04em; }
+.typography-preview h3 { margin:16px 0 9px; font-family:var(--preview-heading-font)!important; font-size:38px; font-weight:var(--preview-heading-weight); letter-spacing:var(--preview-heading-letter-spacing); }
 .typography-preview p { max-width:680px; margin:0 0 18px; color:#665d69; font-family:var(--preview-body-font)!important; font-size:15px; font-weight:var(--preview-body-weight); line-height:1.8; }
 .typography-preview button { min-height:40px; padding:0 16px; border:0; border-radius:8px; background:#70507e; color:white; font-family:var(--preview-ui-font)!important; font-size:12px; font-weight:700; }
 .typography-font-grid { margin-bottom:15px; }.typography-font-grid label { padding:16px; border:1px solid var(--line); background:#faf4ed; }.typography-font-grid output { color:var(--accent-strong); font-size:15px; font-weight:800; }.typography-font-grid input[type="range"] { padding:0; border:0; accent-color:var(--accent-strong); }

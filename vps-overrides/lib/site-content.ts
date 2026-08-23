@@ -462,6 +462,7 @@ function cleanTypography(value: unknown): TypographySettings {
     bodyFont: isFontChoice(source.bodyFont) ? source.bodyFont : defaultTypography.bodyFont,
     uiFont: isFontChoice(source.uiFont) ? source.uiFont : defaultTypography.uiFont,
     headingWeight: numberWithin(source.headingWeight, defaultTypography.headingWeight, 400, 800),
+    headingLetterSpacing: numberWithin(source.headingLetterSpacing, defaultTypography.headingLetterSpacing, -0.06, 0.12),
     bodyWeight: numberWithin(source.bodyWeight, defaultTypography.bodyWeight, 300, 600),
     bodyScale: numberWithin(source.bodyScale, 1, 0.9, 1.2),
     letterSpacing: numberWithin(source.letterSpacing, defaultTypography.letterSpacing, 0, 0.12),

@@ -70,6 +70,7 @@ export type TypographySettings = {
   bodyFont: FontChoice;
   uiFont: FontChoice;
   headingWeight: number;
+  headingLetterSpacing: number;
   bodyWeight: number;
   bodyScale: number;
   letterSpacing: number;

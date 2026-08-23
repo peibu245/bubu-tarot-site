@@ -86,6 +86,7 @@ export default function StudioPreviewBridge() {
           root.style.setProperty("--reader-body-font", fontStack(message.typography.bodyFont));
           root.style.setProperty("--reader-ui-font", fontStack(message.typography.uiFont));
           root.style.setProperty("--reader-heading-weight", String(Math.min(800, Math.max(400, message.typography.headingWeight))));
+          root.style.setProperty("--reader-heading-letter-spacing", `${Math.min(.12, Math.max(-.06, message.typography.headingLetterSpacing))}em`);
           root.style.setProperty("--reader-body-weight", String(Math.min(600, Math.max(300, message.typography.bodyWeight))));
           root.style.setProperty("--reader-copy-size-offset", `${Math.round((scale - 1) * 160) / 10}px`);
           root.style.setProperty("--reader-copy-letter-spacing", `${Math.min(.12, Math.max(0, message.typography.letterSpacing))}em`);

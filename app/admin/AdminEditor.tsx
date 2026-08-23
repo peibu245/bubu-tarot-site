@@ -85,7 +85,7 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
             return <button className={active ? "is-active" : ""} type="button" key={preset.id} onClick={() => setContent({ ...content, typography: { ...preset.settings } })}><b>{preset.name}</b><span>{preset.note}</span></button>;
           })}
         </div>
-        <div className="typography-preview" style={{ "--preview-heading-font": fontStacks[content.typography.headingFont], "--preview-body-font": fontStacks[content.typography.bodyFont], "--preview-ui-font": fontStacks[content.typography.uiFont], "--preview-heading-weight": content.typography.headingWeight, "--preview-body-weight": content.typography.bodyWeight } as CSSProperties}>
+        <div className="typography-preview" style={{ "--preview-heading-font": fontStacks[content.typography.headingFont], "--preview-body-font": fontStacks[content.typography.bodyFont], "--preview-ui-font": fontStacks[content.typography.uiFont], "--preview-heading-weight": content.typography.headingWeight, "--preview-heading-letter-spacing": `${content.typography.headingLetterSpacing}em`, "--preview-body-weight": content.typography.bodyWeight } as CSSProperties}>
           <span>LIVE TYPE PREVIEW</span><h3>先来聊聊，再决定</h3><p>不需要提前整理得很完整。你可以先发一句话过来，信息不足时我会再问。</p><button type="button">联系咨询</button>
         </div>
         <div className="form-grid typography-font-grid">
@@ -93,6 +93,7 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
           <label>正文说明字体<select value={content.typography.bodyFont} onChange={(event) => setContent({ ...content, typography: { ...content.typography, bodyFont: event.target.value as FontChoice } })}>{fontOptions.map((option) => <option value={option.value} key={option.value}>{option.label}｜{option.note}</option>)}</select></label>
           <label>导航与按钮字体<select value={content.typography.uiFont} onChange={(event) => setContent({ ...content, typography: { ...content.typography, uiFont: event.target.value as FontChoice } })}>{fontOptions.map((option) => <option value={option.value} key={option.value}>{option.label}｜{option.note}</option>)}</select></label>
           <label>标题粗细 <output>{content.typography.headingWeight}</output><input type="range" min="400" max="800" step="100" value={content.typography.headingWeight} onChange={(event) => setContent({ ...content, typography: { ...content.typography, headingWeight: Number(event.target.value) } })} /></label>
+          <label>标题字间距 <output>{content.typography.headingLetterSpacing.toFixed(3)}em</output><input type="range" min="-0.06" max="0.12" step="0.005" value={content.typography.headingLetterSpacing} onChange={(event) => setContent({ ...content, typography: { ...content.typography, headingLetterSpacing: Number(event.target.value) } })} /></label>
           <label>正文粗细 <output>{content.typography.bodyWeight}</output><input type="range" min="300" max="600" step="100" value={content.typography.bodyWeight} onChange={(event) => setContent({ ...content, typography: { ...content.typography, bodyWeight: Number(event.target.value) } })} /></label>
         </div>
         <div className="form-grid typography-grid">
