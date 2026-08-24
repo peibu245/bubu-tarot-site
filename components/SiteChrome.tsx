@@ -16,10 +16,11 @@ export function SiteHeader({ copy }: ChromeProps) {
             <span>{text(copy, "siteBrand", "不不tarot")}</span>
           </Link>
           <nav className="public-nav" aria-label="网站导航">
-            <Link href="/dream">{text(copy, "navDream", "梦向解读")}</Link>
-            <Link href="/reality">{text(copy, "navReality", "现实问题咨询")}</Link>
-            <Link href="/ideas">其他主题</Link>
-            <Link href="/policies">服务规则</Link>
+            <Link href="/">首页</Link>
+            <Link href="/#about">关于</Link>
+            <Link href="/#services">服务</Link>
+            <Link href="/booking">预约</Link>
+            <Link href="/#guestbook">留言</Link>
           </nav>
           <Link className="header-booking" href="/booking#contact">联系咨询</Link>
           <MobileNav copy={copy} />

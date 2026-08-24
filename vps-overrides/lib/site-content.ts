@@ -5,24 +5,24 @@ import { defaultContactChannels, defaultPolicies } from "./legal-defaults";
 import { defaultCardFacts, defaultSpreadGuides } from "./educational-defaults";
 import { defaultTypography, isFontChoice } from "./typography";
 
-const CONTENT_VERSION = 14;
+const CONTENT_VERSION = 15;
 
 export const defaultPageText: Record<string, string> = {
   siteBrand: "不不tarot", navDream: "梦向解读", navReality: "现实问题咨询", navBooking: "预约入口", navNotes: "抽一张", navIdeas: "奇思妙想", navAction: "选择入口",
-  footerIntro: "梦向解读、现实问题咨询与奇思妙想。以文字解读为主。", footerServiceTitle: "服务", footerBookingTitle: "预约", footerBookingLink: "价格与流程", footerNotesLink: "抽一张看看", footerCopyright: "© 2026 不不tarot · 解读内容仅供个人参考与娱乐",
-  homeEyebrow: "BU BU · TAROT READER", homeTitle: "不不tarot", homeDeckline: "梦向解读　·　现实问题咨询　·　奇思妙想",
-  homeLead: "我主要做文字解读。会先看问题背景，再结合牌面图像、元素、灵数、牌位和整组关系分析。信息不足时会先问。",
-  homePrimaryAction: "查看价格与预约", homeSecondaryAction: "先看服务分类　↓", homeReaderName: "不不", homeReaderRole: "以文字回复为主",
-  homeReaderNote1: "先看背景再展开", homeReaderNote2: "会写清楚依据", homeReaderNote3: "不确定处会说明",
-  homeServiceTitle: "先选问题类型", homeServiceLead: "梦向解读和现实问题咨询使用不同入口。梦占、传讯也会分别展示项目和价格。",
-  homeServiceEyebrow: "READING SERVICES", homeCardLink: "查看说明　↗", homeAboutEyebrow: "ABOUT THE READING",
+  footerIntro: "梦向解读、现实问题咨询与奇思妙想。以文字解读为主。", footerServiceTitle: "服务", footerBookingTitle: "预约", footerBookingLink: "价格与流程", footerNotesLink: "抽一张看看", footerCopyright: "© 2026 不不 Tarot",
+  homeEyebrow: "BU BU · TAROT READER", homeTitle: "不不 Tarot｜塔罗解读", homeDeckline: "现实 · 梦向 · OC",
+  homeLead: "不知道怎么开口也没关系，先发一句话过来就好。信息不够我会再问，不用急着写小作文。",
+  homePrimaryAction: "查看价格与预约", homeSecondaryAction: "先看服务分类　↓", homeReaderName: "不不", homeReaderRole: "语音 & 文字",
+  homeReaderNote1: "相信科学", homeReaderNote2: "事在人为", homeReaderNote3: "爱自己",
+  homeServiceTitle: "你想问哪一类？", homeServiceLead: "梦向、现实、奇思妙想，不同类别不同价格。选和你问题最贴近的那个就好。",
+  homeServiceEyebrow: "READING SERVICES", homeCardLink: "查看说明　↗", homeAboutEyebrow: "BU BU · ABOUT THE READING",
   homeDreamLabel: "DREAM READING", homeDreamTitle: "梦向解读", homeRealityLabel: "REALITY READING", homeRealityTitle: "现实问题咨询", homeIdeasLabel: "CURIOUS CORNER", homeIdeasTitle: "奇思妙想",
   homeDreamSummary: "梦占与传讯分开处理，也分别计价。", homeDreamDetail: "梦占侧重牌面、牌阵与整组关系；传讯侧重角色口吻、情绪和信息表达。",
   homeRealitySummary: "先补足现实背景，再安排问题和牌阵。", homeRealityDetail: "可看情感、人际、学业、工作、选择和阶段变化。",
   homeIdeasSummary: "OC、宠物，以及常规分类放不下的题目。", homeIdeasDetail: "偏向角色分析、创作辅助、纪念向内容或实验性玩法。",
-  homeAboutTitle: "我的卡牌解读方法", homeAboutText: "我会先确认必要背景，再看单张牌、牌位和整组结构。遇到不同流派的解释差异时，会说明本次采用的思路。牌面看不出的部分也会直接说。",
-  homeMethod1Title: "补充背景", homeMethod1Text: "确认对象、时间范围和已经发生的事实。", homeMethod2Title: "安排牌阵", homeMethod2Text: "按问题复杂度选择牌阵和需要使用的牌。", homeMethod3Title: "完成解读", homeMethod3Text: "说明牌面依据、限制条件和可以参考的方向。",
-  homeBookingTitle: "先选项目，再把问题写清楚。",
+  homeAboutTitle: "我会怎么读这组牌", homeAboutText: "我会先问清楚背景，再看单张牌、牌位和整组牌之间的关系。不同体系有不同读法时，我会告诉你这次为什么这样读。牌面里没有的信息，我不会硬编。",
+  homeMethod1Title: "聊清楚背景", homeMethod1Text: "确认对象、时间范围和已经发生的事实。", homeMethod2Title: "安排牌阵", homeMethod2Text: "按问题复杂度选择牌阵和需要使用的牌。", homeMethod3Title: "一起解读", homeMethod3Text: "说明牌面依据、限制条件和可以参考的方向。",
+  homeBookingTitle: "选好类型，把你想问的事说给我听。",
   homeOfferEyebrow: "CURRENT OFFERS", homeOfferTitle: "当前活动", homeOfferLink: "查看全部价格　→", homeNotesEyebrow: "SHORT NOTES", homeNotesTitle: "抽一张看看", homeNotesLink: "去抽一张　→",
   homeNote1Tag: "分类", homeNote1Title: "梦向解读和现实问题为什么分开", homeNote1Text: "两类问题依赖的信息不同，服务方式和价格也会分别展示。", homeNote2Tag: "提问", homeNote2Title: "怎么把问题写清楚", homeNote2Text: "对象、时间范围、已知事实和真正想问的点都很重要。", homeNote3Tag: "方法", homeNote3Title: "什么时候会用多套牌", homeNote3Text: "复杂主题会按需要组合牌阵和体系，不以牌组数量决定结论。", homeNoteLink: "阅读全文　↗", homeBookingEyebrow: "BOOK A READING", homeBookingAction: "查看预约流程",
   dreamEyebrow: "DREAM READING", dreamTitle: "梦向解读", dreamLead: "梦占与传讯使用独立项目，也分别计价。",
@@ -39,12 +39,12 @@ export const defaultPageText: Record<string, string> = {
   realityPriceTitle: "项目与价格", realityCtaTitle: "确认入口后再预约", realityCtaText: "梦向与现实问题使用不同项目，发送问题时请注明入口。",
   realityAboutEyebrow: "ABOUT THIS SERVICE", realityAboutTitle: "这一类会怎么看", realityContentHeading: "可看内容", realityPrepareHeading: "预约时请准备", realityPriceEyebrow: "PROJECTS & PRICING", realityOfferEyebrow: "CURRENT OFFERS", realityOfferTitle: "适用活动", realityCtaEyebrow: "NEXT STEP", realityCtaAction: "查看预约方式", realityPendingTitle: "定价尚未公布", realityPendingText: "方案确定后会在这里单独更新，不沿用其他入口的价格。",
   footerPoliciesLink: "条款与隐私", statusOpen: "开放预约", statusClosed: "暂不接单", featuredNote: "当前主推项目", pricingPending: "定价中", promoNow: "现在", promoTbd: "另行通知", itemCountSuffix: "个项目", priceGroupDream: "梦占", priceGroupMessage: "传讯", priceGroupReality: "现实问题咨询", priceGroupIdeas: "奇思妙想",
-  homeReaderEst: "EST. 2026", homePortraitMark: "BU BU",
+  homeReaderEst: "2026年8月", homePortraitMark: "BU BU",
   dreamSub1Label: "CARD READING", dreamSub2Label: "MESSAGE",
   ideasEyebrow: "CURIOUS CORNER", ideasTitle: "奇思妙想", ideasLead: "OC、宠物，以及常规分类放不下的题目。", ideasIntro: "这类项目偏向角色分析、创作辅助、纪念向内容或娱乐体验。接单前会确认问题是否适合，以及需要使用的牌组和问法。", ideasAboutEyebrow: "ABOUT THIS SERVICE", ideasAboutTitle: "这一类会怎么看", ideasContentHeading: "可看内容", ideasContent1: "OC性格与关系探索", ideasContent2: "角色创作辅助", ideasContent3: "宠物主题与纪念向", ideasContent4: "新牌组与实验性玩法", ideasPrepareHeading: "预约时请准备", ideasPrepare1: "角色或对象的基础信息", ideasPrepare2: "世界观和关系设定", ideasPrepare3: "本次解读的用途", ideasPrepare4: "希望得到的内容形式", ideasPriceEyebrow: "PROJECTS & PRICING", ideasPriceTitle: "项目与价格", ideasOfferEyebrow: "CURRENT OFFERS", ideasOfferTitle: "适用活动", ideasCtaEyebrow: "NEXT STEP", ideasCtaTitle: "想好了再来找我", ideasCtaText: "把你想玩的题目和必要设定发来就行。", ideasCtaAction: "查看预约方式", ideasPendingTitle: "定价尚未公布", ideasPendingText: "方案确定后会在这里单独更新。",
   bookingEyebrow: "CHOOSE AN ENTRANCE", bookingTitle: "选择预约入口", bookingLead: "梦向解读与现实问题咨询使用不同的项目和价格。先进入对应页面看清楚，再决定要不要预约。", bookingStep1Label: "第一步", bookingStep1Title: "选择服务类型", bookingEntryAction: "进入查看　↗", bookingDreamEyebrow: "DREAM READING", bookingDreamTitle: "梦向解读", bookingDreamSummary: "梦占和传讯分别展示、分别计价。可以先进去看看两种服务的区别。", bookingRealityEyebrow: "REALITY CONSULTATION", bookingRealityTitle: "现实问题咨询", bookingRealitySummary: "新客单问、常规单问、深入解析与综合大牌阵都放在这个入口。", bookingIdeasEyebrow: "CURIOUS CORNER", bookingIdeasTitle: "奇思妙想", bookingIdeasSummary: "OC、宠物、角色创作辅助，以及暂时不适合放进常规分类的题目。", bookingStep2Label: "第二步", bookingStep2Title: "准备问题", bookingPrepare1Title: "问题类型", bookingPrepare1Text: "注明选择梦向解读（梦占或传讯）、现实问题咨询，还是奇思妙想。", bookingPrepare2Title: "必要背景", bookingPrepare2Text: "写明对象、时间范围，以及已经发生的关键事实或必要设定。", bookingPrepare3Title: "真正想问的点", bookingPrepare3Text: "尽量避免只写“看看感情”或“看看未来”这种特别宽的说法。", bookingPromoLabel: "当前", bookingPromoTitle: "优惠活动", bookingContactLabel: "最后一步", bookingContactTitle: "联系不不", bookingBoundaryEyebrow: "BEFORE BOOKING", bookingBoundaryTitle: "接单范围", bookingBoundary1Label: "可以讨论：", bookingBoundary1Text: "情感、人际、学业、工作、阶段变化、梦角与梦设、OC及其他娱乐向主题。", bookingBoundary2Label: "暂不接：", bookingBoundary2Text: "生死、走失、重大疾病诊断、法律结论、投资或赌博决策。", bookingBoundary3Label: "服务说明：", bookingBoundary3Text: "卡牌作为图像、象征与叙事媒介，用于娱乐体验、角色创作和现实问题梳理；不提供通灵、改运或结果保证。", bookingBoundary4Label: "需要知道：", bookingBoundary4Text: "解读基于当前信息，现实条件变化后，结果也可能变化。",
   notesEyebrow: "DRAW A CARD", notesTitle: "抽一张看看", notesLead: "从牌背里随手选一张。抽到的牌不会在这一轮里重复；主动洗牌后才重新开始。", deckEyebrow: "PICK A DECK", deckTitle: "选一副牌，随手抽一张", deckLead: "不用把整副牌挤进屏幕。你看到的是摊开的一个窗口，背后仍然按完整牌组无放回抽取。", deckHint: "点牌扇里的任意一张。", deckDrawAgain: "再点一张也可以", deckResultEmpty: "还没有翻牌。", deckChange: "换一张　↻", deckCardFront: "NOTE", deckCountSuffix: "条科普可抽取", deckAriaLabel: "抽一张看看", deckChooseLabel: "选择牌堆", deckRwsLabel: "韦特–史密斯", deckRwsSubtitle: "Waite–Smith · 1910", deckLenormandLabel: "雷诺曼", deckLenormandSubtitle: "B. Dondorf · 19th c.", deckKnowledgeLabel: "知识牌堆", deckKnowledgeSubtitle: "BU BU'S NOTES", deckMarseilleLabel: "马赛", deckMarseilleSubtitle: "历史公版整理中", deckThothLabel: "托特", deckThothSubtitle: "画面授权暂不启用", deckComingSoon: "准备中", deckShuffle: "洗牌", deckShuffling: "洗牌中…", deckShuffleHint: "收牌、洗散，再重新摊开。", deckAfterDrawHint: "想继续就再点一张；主动洗牌会把本轮已经抽过的牌重新放回去。", deckDrawPrefix: "抽取", deckDrawSuffix: "中的一张", deckKnowledgeFoot: "BU BU · NOTE", tipsLabel: "TIPS", tipsChange: "换一个 ↻", tipsAria: "随机小提示", factTitle: "你知道吗？", factReveal: "点一下揭开", factHide: "收起", factNext: "换一个细节 ↻", factEmpty: "这张牌的小细节还在整理中。", deckSourceSummary: "图像来源与公版说明", deckSourceRws: "韦特–史密斯：Pamela Colman Smith 绘制的早期 Waite–Smith 历史扫描，来自 Wikimedia Commons 公有领域档案。", deckSourceLenormand: "雷诺曼：使用 19 世纪 B. Dondorf 的 36 张历史公版图像；原件藏于大英博物馆。本站基于 Wikimedia Commons 公版机械扫描做非生成式网页整理：保留人物、场景与扑克嵌图，只统一顶部牌号版式并提升网页显示清晰度。", deckSourceRwsLink: "Waite–Smith source ↗", deckSourceLenormandLink: "B. Dondorf Lenormand source ↗", spreadEyebrow: "SPREAD NOTES", spreadTitle: "牌阵小册", spreadLead: "牌阵不是越大越准。塔罗和雷诺曼的阅读逻辑不同，所以先分开看。", spreadTarotTab: "塔罗牌阵", spreadLenormandTab: "雷诺曼牌阵", spreadSystemAria: "选择牌阵体系", spreadBestLabel: "适合", spreadAvoidLabel: "不太适合", spreadPositionsLabel: "牌位", spreadRelationLabel: "怎么串起来看", spreadOpen: "展开看看", spreadClose: "收起",
-  guestbookEyebrow: "MESSAGE BOARD", guestbookTitle: "留一页话", guestbookLead: "可以聊聊网站的改进建议，有什么想对我说，想抒发的也可以写在这里。", guestbookNicknameLabel: "署名（可选）", guestbookNicknamePlaceholder: "匿名访客", guestbookMessageLabel: "留言", guestbookMessagePlaceholder: "写下你的话…", guestbookSubmit: "发布留言", guestbookSending: "发送中…", guestbookEmpty: "还没有留言。你可以写第一条。", guestbookLoading: "加载留言中…", guestbookLoadError: "留言板暂时无法加载。", guestbookSent: "已发布。今天还可以再留几条。", guestbookSendError: "发送失败，请稍后重试。",
+  guestbookEyebrow: "MESSAGE BOARD", guestbookTitle: "留一页话", guestbookLead: "可以聊卡牌、分享抽卡感受，或留下想看的内容。留言会公开显示，请使用昵称，不要写联系方式、私人对话或他人隐私，也请避免露骨、攻击性或引流内容。每位访客每天最多 10 条。", guestbookNicknameLabel: "署名（可选）", guestbookNicknamePlaceholder: "匿名访客", guestbookMessageLabel: "留言", guestbookMessagePlaceholder: "写下你的话…", guestbookSubmit: "发布留言", guestbookSending: "发送中…", guestbookEmpty: "还没有留言。你可以写第一条。", guestbookLoading: "加载留言中…", guestbookLoadError: "留言板暂时无法加载。", guestbookSent: "已发布。今天还可以再留几条。", guestbookSendError: "发送失败，请稍后重试。",
    contactPrimaryHeading: "选择你习惯的联系方式", contactSocialHeading: "其他可以找到我的地方", contactDetailEyebrow: "CONTACT", contactAccountLabel: "账号", contactCopyGeneric: "复制账号", contactShowQr: "显示二维码", contactHideQr: "收起二维码", contactQrHint: "电脑端可以直接扫码；手机端可以点“保存二维码”，若浏览器没有直接写入相册，也可以长按二维码图片保存。", contactSaveQr: "保存二维码", contactSavingQr: "保存中…", contactSavedQr: "已保存 ✓", contactSaveQrRetry: "保存失败，点此重试", contactClosedTitle: "当前暂不接单", contactClosedText: "预约重新开放后，这里会显示可用联系方式。", contactUnlockButton: "阅读预约须知并查看联系方式　↗", contactConfirmedPrefix: "已确认", contactReviewButton: "重新查看预约须知", contactWechatPlaceholder: "微信号待补充", contactCopyButton: "复制微信号", contactCopiedButton: "已复制 ✓", contactOpenPrefix: "打开", contactLinkPending: "链接待补充", contactNoChannelsTitle: "联系方式正在整理", contactNoChannelsText: "你已经完成预约须知确认，但目前没有启用的联系渠道。", contactPolicyAll: "查看全部政策", contactModalEyebrow: "BEFORE CONTACT", contactModalTitle: "在联系不不之前", contactKey1Title: "服务边界", contactKey1Text: "卡牌阅读用于娱乐、自我探索、角色创作与思路整理，不保证预测、通灵、改运或现实结果。", contactKey2Title: "高风险问题", contactKey2Text: "重大疾病、生死、走失、法律结论、投资与赌博决策不作为个人解读范围。", contactKey3Title: "隐私提醒", contactKey3Text: "只提供完成咨询必要的信息；截图请尽量遮挡第三人的姓名、手机号、账号和其他无关信息。", contactServiceLink: "服务说明 ↗", contactRiskLink: "风险提示 ↗", contactPrivacyLink: "隐私政策 ↗", contactRefundLink: "退款规则 ↗", contactAdultConsent: "我已年满 {age} 周岁。", contactTermsConsent: "我已阅读并同意《服务说明》《退款规则》，并已知悉《风险提示》。", contactPrivacyConsent: "我已阅读《隐私政策》，了解咨询过程中必要信息的处理方式。", contactDataNote: "请尽量不要提供与咨询无关的真实姓名、身份证号、精确住址等信息。网站只在浏览器本地记录本次政策版本与确认时间，用于减少重复提示。", contactAcceptButton: "确认并查看联系方式", contactWechatTag: "WECHAT", contactXianyuTag: "GOOFISH", contactOtherTag: "CONTACT", policyEffectiveLabel: "生效日期", policyMissingDate: "未填写",
   policiesEyebrow: "BOOKING POLICIES", policiesTitle: "预约前说明", policiesServiceLabel: "SERVICE", policiesServiceTitle: "服务说明", policiesServiceText: "服务性质、接单范围、服务方式与年龄门槛。", policiesRiskLabel: "NOTICE", policiesRiskTitle: "风险提示", policiesRiskText: "卡牌阅读的解释边界，以及不应交给塔罗决定的事项。", policiesPrivacyLabel: "PRIVACY", policiesPrivacyTitle: "隐私政策", policiesPrivacyText: "会接触哪些信息、为什么需要，以及如何减少不必要的信息提供。", policiesRefundLabel: "REFUND", policiesRefundTitle: "退款规则", policiesRefundText: "未开始、进行中、已完成和无法完成服务时分别如何处理。", policiesReadAction: "阅读全文　↗", policiesShortTitle: "一句话版本", policiesShortText: "塔罗可以用来娱乐、梳理想法与创作，但不保证预测或现实结果；付费前会明确服务范围，个人信息只收必要部分，退款按照实际履约进度处理。", policyBackAll: "← 返回全部预约说明", policyGoBooking: "前往预约入口 →",
 };
@@ -55,7 +55,7 @@ export const defaultContent: SiteContent = {
   bookingsOpen: true,
   priceNotice: "现实问题咨询价格以页面为准。问题跨度较大或涉及多个独立主题时，会在接单前确认是否需要拆单。",
   dreamPriceNotice: "梦占与传讯分别计价，具体方案正在整理中，暂不展示价格。",
-  contactNote: "预约时请发送：问题类型＋想问的问题＋必要背景。",
+  contactNote: "预约时请发送：问题类型 + 想问的问题 + 必要背景",
   contactLabel: "查看当前项目",
   contactUrl: "",
   contactChannels: defaultContactChannels,
@@ -67,7 +67,7 @@ export const defaultContent: SiteContent = {
     { id: "reality-custom", section: "现实问题咨询", title: "综合大牌阵", description: "用于人物关系复杂、信息量较大，或需要比较多条发展路径的主题。先梳理背景和核心问题，以大牌阵建立整体结构，再用小牌阵补充关键细节；可按需要组合韦特、透特、马赛、雷诺曼等体系进行交叉参照。接单前确认解读范围，包含一次原主题内的补充说明。", price: "518", unit: "元 / 复杂主题", badge: "CUSTOM SPREAD", delivery: "", turnaround: "", followUp: "", suitableFor: "", status: "available", visible: true, featured: false },
   ],
   promotions: [
-    { id: "hundred", scope: "梦向解读", title: "自带牌阵", description: "自己抽完牌只需要解牌服务，节省塔罗师洗牌抽牌和与梦角沟通的时间，可享八折优惠", badge: "自己动手丰衣足食", startsAt: "", endsAt: "", active: true },
+    { id: "hundred", scope: "全站", title: "自带牌阵", description: "自己抽好牌，只需要解读服务，立享八折。", badge: "自己动手丰衣足食", startsAt: "", endsAt: "", active: true },
   ],
   knowledgeCards: [
     { id: "tip-future", tag: "Tips", title: "未来不是定稿", body: "塔罗不能完美预测未来，更适合根据当下情况观察可能的发展方向。", visible: true },
@@ -244,6 +244,33 @@ function migrateTerminology(content: SiteContent): SiteContent {
   replaceIfUntouched("deckSourceLenormand", "雷诺曼：1799 年 Johann Kaspar Hechtel《Das Spiel der Hofnung（希望游戏）》36 张，原件来自大英博物馆；图像在 Wikimedia Commons 标记为公有领域。", defaultPageText.deckSourceLenormand);
   replaceIfUntouched("deckSourceLenormand", "雷诺曼：19 世纪 B. Dondorf 出版的 36 张 Mlle. Lenormand fortune-telling cards；原件藏于大英博物馆，本站使用 Wikimedia Commons 标记为公有领域的机械扫描并切分为单张。", defaultPageText.deckSourceLenormand);
 
+  if (content.contentVersion < 15) {
+    Object.assign(pageText, {
+      homeTitle: "不不 Tarot｜塔罗解读",
+      homeDeckline: "现实 · 梦向 · OC",
+      homeLead: "不知道怎么开口也没关系，先发一句话过来就好。信息不够我会再问，不用急着写小作文。",
+      homeReaderEst: "2026年8月",
+      homeReaderRole: "语音 & 文字",
+      homeReaderNote1: "相信科学",
+      homeReaderNote2: "事在人为",
+      homeReaderNote3: "爱自己",
+      homeServiceTitle: "你想问哪一类？",
+      homeServiceLead: "梦向、现实、奇思妙想，不同类别不同价格。选和你问题最贴近的那个就好。",
+      homeAboutEyebrow: "BU BU · ABOUT THE READING",
+      homeAboutTitle: "我会怎么读这组牌",
+      homeAboutText: "我会先问清楚背景，再看单张牌、牌位和整组牌之间的关系。不同体系有不同读法时，我会告诉你这次为什么这样读。牌面里没有的信息，我不会硬编。",
+      homeMethod1Title: "聊清楚背景",
+      homeMethod1Text: "确认对象、时间范围和已经发生的事实。",
+      homeMethod2Title: "安排牌阵",
+      homeMethod2Text: "按问题复杂度选择牌阵和需要使用的牌。",
+      homeMethod3Title: "一起解读",
+      homeMethod3Text: "说明牌面依据、限制条件和可以参考的方向。",
+      homeBookingTitle: "选好类型，把你想问的事说给我听。",
+      guestbookLead: "可以聊卡牌、分享抽卡感受，或留下想看的内容。留言会公开显示，请使用昵称，不要写联系方式、私人对话或他人隐私，也请避免露骨、攻击性或引流内容。每位访客每天最多 10 条。",
+      footerCopyright: "© 2026 不不 Tarot",
+    });
+  }
+
   // V8 expanded the contact center; known channels only receive supplied defaults when an old field is blank.
   const tipIds = new Set(content.knowledgeCards.map((tip) => tip.id));
   const v10Tips: KnowledgeCard[] = [
@@ -282,7 +309,19 @@ function migrateTerminology(content: SiteContent): SiteContent {
   });
   const knownIds = new Set(merged.map((channel) => channel.id));
   const extras = content.contactChannels.filter((channel) => !knownIds.has(channel.id) && !defaultContactChannels.some((fallback) => fallback.kind === channel.kind));
-  return { ...content, pageText, knowledgeCards, spreadGuides, contactChannels: [...merged, ...extras].slice(0, 12), contentVersion: CONTENT_VERSION };
+  const promotions = content.promotions.map((promotion) => promotion.id === "hundred" || promotion.title === "自带牌阵"
+    ? { ...promotion, scope: "全站" as const, title: "自带牌阵", description: "自己抽好牌，只需要解读服务，立享八折。", badge: "自己动手丰衣足食" }
+    : promotion);
+  return {
+    ...content,
+    contactNote: content.contentVersion < 15 ? "预约时请发送：问题类型 + 想问的问题 + 必要背景" : content.contactNote,
+    pageText,
+    promotions,
+    knowledgeCards,
+    spreadGuides,
+    contactChannels: [...merged, ...extras].slice(0, 12),
+    contentVersion: CONTENT_VERSION,
+  };
 }
 
 function cleanPrice(value: unknown, index: number): PriceItem {

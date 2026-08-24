@@ -1069,14 +1069,14 @@ body { font-size:16px; line-height:1.7; }
 .public-header *,.public-page :where(button,input,textarea,select,label,.micro-label,.status-pill,.service-status,.service-card-meta,.booking-entry-meta,.card-link,.footer-column) { font-family:var(--reader-ui-font,var(--sans))!important; }
 .public-header { display:block; padding-right:clamp(24px,4vw,64px); padding-left:clamp(24px,4vw,64px); }
 .public-header-inner { width:min(1440px,100%); height:100%; margin:0 auto; display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:36px; }
-.public-header-inner .public-nav { justify-self:center; }
+.public-header-inner .public-nav { justify-self:center; gap:clamp(20px,2.2vw,32px); }
 
 /* Final storefront polish: keep the path to contact compact and calm. */
-#services,#contact,#guestbook { scroll-margin-top:96px; }
+#about,#services,#booking,#contact,#guestbook { scroll-margin-top:96px; }
 .public-page :where(h1,h2,h3) { text-wrap:balance; }
 .public-page :where(a,button,input,textarea,select):focus-visible { outline:3px solid rgba(111,79,150,.34); outline-offset:3px; }
 .home-hero { min-height:620px; padding:76px clamp(24px,7vw,112px) 72px; grid-template-columns:1.08fr .82fr; gap:clamp(48px,7vw,104px); }
-.home-hero h1 { max-width:820px; margin-bottom:14px; font-size:clamp(58px,7.2vw,104px); line-height:1.02; }
+.home-hero h1 { max-width:900px; margin-bottom:14px; font-size:clamp(50px,6vw,88px); line-height:1.04; }
 .home-deckline { margin-bottom:22px; }
 .home-lead { margin-bottom:18px; }
 .reader-card { min-height:452px; padding:25px 28px 28px; border-radius:28px; }
@@ -1115,9 +1115,9 @@ body { font-size:16px; line-height:1.7; }
   .mobile-bottom-actions a { min-height:44px; display:grid; place-items:center; border-radius:11px; background:#f1e9f2; color:#604c69; font-size:13px; font-weight:700; }
   .mobile-bottom-actions a:last-child { background:#70507e; color:#fff; }
   .public-page { padding-bottom:calc(82px + env(safe-area-inset-bottom)); }
-  #services,#contact,#guestbook { scroll-margin-top:82px; }
+  #about,#services,#booking,#contact,#guestbook { scroll-margin-top:82px; }
   .home-hero { padding:52px 20px 48px; gap:36px; }
-  .home-hero h1 { max-width:100%; font-size:clamp(50px,15.5vw,60px); line-height:1.06; }
+  .home-hero h1 { max-width:100%; font-size:clamp(42px,12vw,52px); line-height:1.08; }
   .home-deckline { margin-bottom:16px; }
   .home-actions { gap:18px; }
   .reader-card { min-height:0; padding:22px 21px 24px; border-radius:24px; }
