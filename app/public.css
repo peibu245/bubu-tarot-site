@@ -122,7 +122,7 @@ button,input,textarea,select { font:inherit; }
 .flow-title>span { width:28px; height:28px; display:grid; place-items:center; border-radius:50%; background:var(--ink); color:white; font-size:11px; }
 .flow-title>p { margin:0; color:#777b77; font-size:12px; }
 .flow-title h2 { margin:0; font:600 20px ui-serif,"Songti SC",serif; }
-.booking-price-list { display:grid; gap:15px; }
+.booking-price-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:15px; }
 .booking-price-card { padding:27px 28px; border:1px solid var(--line); border-radius:14px; background:var(--white); box-shadow:0 3px 10px rgba(23,23,23,.03); }
 .booking-price-card.featured-price { border-color:#92ceb1; box-shadow:0 0 0 3px rgba(146,206,177,.13); }
 .booking-price-top { display:grid; grid-template-columns:1fr auto; gap:25px; align-items:start; }
@@ -213,7 +213,7 @@ button,input,textarea,select { font:inherit; }
 .service-price-heading { margin-bottom:18px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
 .service-price-heading h3 { margin:0; font-size:28px; }
 .service-price-heading span { padding:7px 11px; border-radius:999px; background:var(--accent-soft); color:var(--accent-strong); font-size:12px; font-weight:700; }
-.price-pending { padding:34px; border:1px dashed #cbb7da; border-radius:14px; background:var(--paper); }
+.price-pending { grid-column:1/-1; padding:34px; border:1px dashed #cbb7da; border-radius:14px; background:var(--paper); }
 .price-pending b { font-size:22px; }
 .price-pending p { margin:10px 0 0; color:#655c69; font-size:15px; line-height:1.8; }
 .service-detail-column { border-top:1px solid var(--ink); }
@@ -226,6 +226,7 @@ button,input,textarea,select { font:inherit; }
 .service-page-cta div>p:last-child { margin:0; color:rgba(255,255,255,.5); font-size:11px; }
 
 @media(max-width:1000px) {
+  .booking-price-list { grid-template-columns:1fr; }
   .public-header { grid-template-columns:1fr auto; }
   .public-nav { display:none; }
   .home-hero { grid-template-columns:1fr; }
