@@ -128,9 +128,17 @@ export default function StudioPreviewBridge() {
 
     function onMessage(event: MessageEvent) {
       if (event.origin !== window.location.origin) return;
-      const data = event.data as Partial<DraftMessage>;
-      if (data?.type !== "bubu-preview:update" || !data.pageText || !data.baseline || !Array.isArray(data.keys)) return;
-      apply(data as DraftMessage);
+      const data = event.data as { type?: string; key?: unknown; position?: unknown; pageText?: Record<string, string>; baseline?: Record<string, string>; keys?: string[] };
+      if (data?.type === "bubu-preview:focus" && typeof data.key === "string") {
+        const target = mapping.get(data.key)?.find((element) => document.contains(element));
+        target?.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+      if (data?.type === "bubu-preview:scroll" && (data.position === "top" || data.position === "bottom")) {
+        window.scrollTo({ top: data.position === "top" ? 0 : document.documentElement.scrollHeight, behavior: "smooth" });
+        return;
+      }
+      if (data?.type === "bubu-preview:update" && data.pageText && data.baseline && Array.isArray(data.keys)) apply(data as DraftMessage);
     }
 
     function onClick(event: MouseEvent) {

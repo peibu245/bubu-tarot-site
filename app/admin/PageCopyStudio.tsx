@@ -71,6 +71,15 @@ export default function PageCopyStudio({ content, setContent }: { content: SiteC
     iframeRef.current.contentWindow.postMessage(previewMessage, window.location.origin);
   }
 
+  function focusPreview(key: string) {
+    postPreview();
+    window.setTimeout(() => iframeRef.current?.contentWindow?.postMessage({ type: "bubu-preview:focus", key }, window.location.origin), 40);
+  }
+
+  function scrollPreview(position: "top" | "bottom") {
+    iframeRef.current?.contentWindow?.postMessage({ type: "bubu-preview:scroll", position }, window.location.origin);
+  }
+
   useEffect(() => { if (previewReady) postPreview(); }, [previewMessage, previewReady]);
   useEffect(() => {
     const syncBaseline = (event: Event) => {
@@ -184,7 +193,7 @@ export default function PageCopyStudio({ content, setContent }: { content: SiteC
                   {filtered.map((field) => {
                     const value = content.pageText[field.key] ?? "";
                     const multiline = field.multiline || value.length > 54 || value.includes("\n");
-                    return <label className="copy-field" data-copy-field-key={field.key} key={field.key}><span><b>{field.label}</b><code>{field.key}</code></span>{field.hint && <small>{field.hint}</small>}{multiline ? <textarea rows={Math.min(7, Math.max(3, value.split("\n").length + 2))} value={value} onChange={(event) => patchText(field.key, event.target.value)} /> : <input value={value} onChange={(event) => patchText(field.key, event.target.value)} />}</label>;
+                    return <label className="copy-field" data-copy-field-key={field.key} key={field.key}><span><b>{field.label}</b><code>{field.key}</code></span>{field.hint && <small>{field.hint}</small>}{multiline ? <textarea rows={Math.min(7, Math.max(3, value.split("\n").length + 2))} value={value} onFocus={() => focusPreview(field.key)} onChange={(event) => patchText(field.key, event.target.value)} /> : <input value={value} onFocus={() => focusPreview(field.key)} onChange={(event) => patchText(field.key, event.target.value)} />}</label>;
                   })}
                 </div>
               </>}
@@ -225,9 +234,9 @@ export default function PageCopyStudio({ content, setContent }: { content: SiteC
             </div>
 
             <aside className="studio-preview-pane">
-              <div className="studio-preview-toolbar"><div><b>实时草稿</b><span>{previewReady ? "已连接" : "加载中…"}</span></div><button type="button" onClick={() => { setPreviewReady(false); iframeRef.current?.contentWindow?.location.reload(); }}>刷新预览</button></div>
-              <div className="studio-device-frame"><iframe ref={iframeRef} key={previewSrc} src={previewSrc} title={`${activePage.title}草稿预览`} onLoad={() => { setPreviewReady(true); window.setTimeout(postPreview, 40); }} /></div>
-              <p>这里显示的是你尚未发布的文字草稿。价格、活动和新建模块仍以“保存并发布”后的正式页面为准；模块卡片本身可以在左侧直接编辑和排序。</p>
+              <div className="studio-preview-toolbar"><div><b>实时草稿</b><span>{previewReady ? "已连接 · 可独立滚动" : "加载中…"}</span></div><div className="studio-preview-actions"><button type="button" onClick={() => scrollPreview("top")}>顶部</button><button type="button" onClick={() => scrollPreview("bottom")}>底部</button><button type="button" onClick={() => { setPreviewReady(false); iframeRef.current?.contentWindow?.location.reload(); }}>刷新</button></div></div>
+              <div className="studio-device-frame"><iframe ref={iframeRef} key={previewSrc} src={previewSrc} scrolling="yes" title={`${activePage.title}草稿预览`} onLoad={() => { setPreviewReady(true); window.setTimeout(postPreview, 40); }} /></div>
+              <p>右侧预览可以单独滚动。点进左侧某个文字框时，预览会自动滚到对应位置；也可以使用上方“顶部 / 底部”快速跳转。</p>
             </aside>
           </div>
         </div>
