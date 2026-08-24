@@ -78,8 +78,8 @@ button,input,textarea,select { font:inherit; }
 .about-copy .micro-label { color:#9dd6ba; }
 .about-copy p:last-child { margin:26px 0 0; color:rgba(255,255,255,.62); font-size:13px; line-height:2; }
 .method-list { margin:0; padding:0; list-style:none; border-top:1px solid rgba(255,255,255,.16); }
-.method-list li { padding:22px 0; display:grid; grid-template-columns:42px 1fr; gap:13px; border-bottom:1px solid rgba(255,255,255,.16); }
-.method-list li>span { color:#9dd6ba; font:10px ui-serif,serif; }
+.method-list li { padding:22px 0; display:grid; grid-template-columns:clamp(48px,4vw,64px) 1fr; gap:13px; border-bottom:1px solid rgba(255,255,255,.16); }
+.method-list li>span { color:#9dd6ba; font:600 clamp(18px,1.45vw,24px)/1.1 ui-serif,serif; }
 .method-list b { font:600 16px ui-serif,"Songti SC",serif; }
 .method-list p { margin:6px 0 0; color:rgba(255,255,255,.42); font-size:10px; line-height:1.7; }
 
