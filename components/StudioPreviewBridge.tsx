@@ -43,6 +43,8 @@ export default function StudioPreviewBridge() {
     let remapTimer: number | null = null;
 
     function findElements(key: string, used: Set<HTMLElement>, scope?: string) {
+      const explicit = Array.from(document.querySelectorAll<HTMLElement>(`[data-copy-key="${CSS.escape(key)}"]`)).filter((element) => !used.has(element));
+      if (explicit.length) return explicit;
       const initial = normalize(currentBaseline[key] || "");
       if (!initial) return [] as HTMLElement[];
       let root: ParentNode = document;
@@ -55,7 +57,8 @@ export default function StudioPreviewBridge() {
       else root = document.querySelector("main.public-page") || document;
       return Array.from(root.querySelectorAll<HTMLElement>(candidateSelector))
         .filter((element) => !used.has(element) && element.childElementCount === 0 && normalize(element.textContent || "") === initial)
-        .filter((element) => !element.closest(".public-header") && !element.closest(".public-footer"));
+        .filter((element) => !element.closest(".public-header") && !element.closest(".public-footer"))
+        .slice(0, 1);
     }
 
     function apply(message: DraftMessage) {

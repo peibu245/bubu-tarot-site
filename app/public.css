@@ -363,6 +363,7 @@ body { font-size:16px; line-height:1.7; }
 .offer-card h3 { font-size:28px; }
 .offer-card p { color:#5d5661; font-size:15px; }
 .offer-card small { color:#756d79; font-size:12px; }
+@media(min-width:1001px) { .offer-card>span { font-size:var(--offer-badge-desktop,14px); }.offer-card h3 { font-size:var(--offer-title-desktop,34px); }.offer-card p { font-size:var(--offer-description-desktop,18px); } }
 .note-card { background:var(--white); }
 .note-card>span { color:var(--accent-strong); font-size:11px; }
 .note-card h3 { font-size:25px; }

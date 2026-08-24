@@ -4,6 +4,7 @@ import Link from "next/link";
 import PublicTypography from "../components/PublicTypography";
 import CustomContentZone from "../components/CustomContentZone";
 import Guestbook from "../components/Guestbook";
+import type { CSSProperties } from "react";
 
 export const dynamic = "force-dynamic";
 
@@ -114,7 +115,7 @@ export default async function Home() {
           </div>
           <div className="offer-grid">
             {activePromotions.map((promotion) => (
-              <article className="offer-card" key={promotion.id}>
+              <article className="offer-card" style={{ "--offer-badge-desktop": `${promotion.desktopBadgeSize ?? 14}px`, "--offer-title-desktop": `${promotion.desktopTitleSize ?? 34}px`, "--offer-description-desktop": `${promotion.desktopDescriptionSize ?? 18}px` } as CSSProperties} key={promotion.id}>
                 <span>{promotion.scope} · {promotion.badge || "NOW"}</span>
                 <h3>{promotion.title}</h3>
                 <p>{promotion.description}</p>

@@ -17,9 +17,10 @@ export default function PublicTextStyles({ pageText, styles }: { pageText: Recor
     for (const [key, setting] of Object.entries(styles || {})) {
       const text = normalize(pageText[key] || "");
       if (!text) continue;
-      const matches = Array.from(root.querySelectorAll<HTMLElement>(candidates)).filter((element) =>
+      const explicit = Array.from(root.querySelectorAll<HTMLElement>(`[data-copy-key="${CSS.escape(key)}"]`)).filter((element) => !used.has(element));
+      const matches = explicit.length ? explicit : Array.from(root.querySelectorAll<HTMLElement>(candidates)).filter((element) =>
         !used.has(element) && element.childElementCount === 0 && normalize(element.textContent || "") === text,
-      );
+      ).slice(0, 1);
       for (const element of matches) {
         used.add(element); touched.push(element);
         element.dataset.copyStyleKey = key;

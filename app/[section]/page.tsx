@@ -5,6 +5,7 @@ import { getSiteContent } from "../../lib/site-content";
 import type { PriceItem, Promotion } from "../../lib/content-types";
 import PublicTypography from "../../components/PublicTypography";
 import CustomContentZone from "../../components/CustomContentZone";
+import type { CSSProperties } from "react";
 
 const sections = {
   dream: {
@@ -147,7 +148,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
       </section>
 
       {promotions.length > 0 && (
-        <section className="service-promotions"><div className="clean-heading compact-heading"><div><p className="micro-label">{sectionCopy.offerEyebrow}</p><h2>{sectionCopy.offerTitle}</h2></div></div><div className="offer-grid">{promotions.map((item) => <article className="offer-card" key={item.id}><span>{item.badge || item.scope}</span><h3>{item.title}</h3><p>{item.description}</p></article>)}</div></section>
+        <section className="service-promotions"><div className="clean-heading compact-heading"><div><p className="micro-label">{sectionCopy.offerEyebrow}</p><h2>{sectionCopy.offerTitle}</h2></div></div><div className="offer-grid">{promotions.map((item) => <article className="offer-card" style={{ "--offer-badge-desktop": `${item.desktopBadgeSize ?? 14}px`, "--offer-title-desktop": `${item.desktopTitleSize ?? 34}px`, "--offer-description-desktop": `${item.desktopDescriptionSize ?? 18}px` } as CSSProperties} key={item.id}><span>{item.badge || item.scope}</span><h3>{item.title}</h3><p>{item.description}</p></article>)}</div></section>
       )}
 
       <section className="service-page-cta"><div><p className="micro-label">{sectionCopy.ctaEyebrow}</p><h2>{sectionCopy.ctaTitle}</h2><p className="editable-copy">{sectionCopy.ctaText}</p></div><Link className="primary-action" href="/booking#contact">{sectionCopy.ctaAction}</Link></section>

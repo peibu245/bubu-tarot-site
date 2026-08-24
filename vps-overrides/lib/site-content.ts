@@ -358,6 +358,9 @@ function cleanPromotion(value: unknown, index: number): Promotion {
     startsAt: text(item.startsAt, 10),
     endsAt: text(item.endsAt, 10),
     active: item.active !== false,
+    desktopBadgeSize: numberWithin(item.desktopBadgeSize, 14, 10, 28),
+    desktopTitleSize: numberWithin(item.desktopTitleSize, 34, 20, 56),
+    desktopDescriptionSize: numberWithin(item.desktopDescriptionSize, 18, 12, 30),
   };
 }
 

@@ -39,7 +39,7 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
   const patchSpread = (id: string, patch: Partial<SpreadGuide>) => setContent((current) => ({ ...current, spreadGuides: current.spreadGuides.map((item) => item.id === id ? { ...item, ...patch } : item) }));
 
   const addPrice = (section: PriceItem["section"]) => setContent((current) => ({ ...current, prices: [...current.prices, { id: makeId("price"), section, title: "新项目", description: "", price: "", unit: "元 / 次", badge: "", delivery: "", turnaround: "", followUp: "", suitableFor: "", status: "available", visible: true, featured: false }] }));
-  const addPromo = () => setContent((current) => ({ ...current, promotions: [...current.promotions, { id: makeId("promo"), scope: "全站", title: "新活动", description: "", badge: "", startsAt: "", endsAt: "", active: true }] }));
+  const addPromo = () => setContent((current) => ({ ...current, promotions: [...current.promotions, { id: makeId("promo"), scope: "全站", title: "新活动", description: "", badge: "", startsAt: "", endsAt: "", active: true, desktopBadgeSize: 14, desktopTitleSize: 34, desktopDescriptionSize: 18 }] }));
   const addKnowledge = () => setContent((current) => ({ ...current, knowledgeCards: [...current.knowledgeCards, { id: makeId("tip"), tag: "Tips", title: "新的提醒", body: "", visible: true }] }));
   const addFact = () => {
     const deck: CardFact["deck"] = factAddCard.startsWith("lenormand-") ? "lenormand" : "rws";
@@ -208,6 +208,7 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
                 <label className="wide">活动说明<textarea value={item.description} onChange={(event) => patchPromo(item.id, { description: event.target.value })} rows={3} /></label>
                 <label>开始日期<input type="date" value={item.startsAt} onChange={(event) => patchPromo(item.id, { startsAt: event.target.value })} /></label>
                 <label>结束日期<input type="date" value={item.endsAt} onChange={(event) => patchPromo(item.id, { endsAt: event.target.value })} /></label>
+                <div className="wide promo-type-controls"><b>PC 端卡片字号</b><label>小标签 <output>{item.desktopBadgeSize ?? 14}px</output><input type="range" min="10" max="28" step="1" value={item.desktopBadgeSize ?? 14} onChange={(event) => patchPromo(item.id, { desktopBadgeSize: Number(event.target.value) })} /></label><label>活动标题 <output>{item.desktopTitleSize ?? 34}px</output><input type="range" min="20" max="56" step="1" value={item.desktopTitleSize ?? 34} onChange={(event) => patchPromo(item.id, { desktopTitleSize: Number(event.target.value) })} /></label><label>活动说明 <output>{item.desktopDescriptionSize ?? 18}px</output><input type="range" min="12" max="30" step="1" value={item.desktopDescriptionSize ?? 18} onChange={(event) => patchPromo(item.id, { desktopDescriptionSize: Number(event.target.value) })} /></label></div>
               </div>
               <div className="check-row"><label><input type="checkbox" checked={item.active} onChange={(event) => patchPromo(item.id, { active: event.target.checked })} /> 活动正在进行</label></div>
             </article>

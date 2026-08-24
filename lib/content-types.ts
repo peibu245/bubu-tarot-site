@@ -27,6 +27,9 @@ export type Promotion = {
   startsAt: string;
   endsAt: string;
   active: boolean;
+  desktopBadgeSize?: number;
+  desktopTitleSize?: number;
+  desktopDescriptionSize?: number;
 };
 
 export type KnowledgeCard = {
