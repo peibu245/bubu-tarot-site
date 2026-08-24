@@ -29,6 +29,8 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
   const [factQuery, setFactQuery] = useState("");
   const [factDeck, setFactDeck] = useState<"all" | "rws" | "lenormand">("all");
   const [factAddCard, setFactAddCard] = useState(rwsCards[0]?.id || "rws-major-00");
+  const [priceJson, setPriceJson] = useState("");
+  const [priceJsonStatus, setPriceJsonStatus] = useState("");
 
   const patchPrice = (id: string, patch: Partial<PriceItem>) => setContent((current) => ({ ...current, prices: current.prices.map((item) => item.id === id ? { ...item, ...patch } : item) }));
   const patchPromo = (id: string, patch: Partial<Promotion>) => setContent((current) => ({ ...current, promotions: current.promotions.map((item) => item.id === id ? { ...item, ...patch } : item) }));
@@ -46,6 +48,55 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
     setFactDeck(deck);
   };
   const addSpread = () => setContent((current) => ({ ...current, spreadGuides: [...current.spreadGuides, { id: makeId("spread"), system: "tarot", title: "新牌阵", subtitle: "", summary: "", bestFor: "", avoidFor: "", positions: ["位置 1", "位置 2", "位置 3"], relation: "", layout: "line3", visible: true }] }));
+
+  function exportPrices() {
+    const json = JSON.stringify(content.prices, null, 2);
+    setPriceJson(json);
+    const blob = new Blob([json], { type: "application/json;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url; anchor.download = `bubu-prices-${new Date().toISOString().slice(0, 10)}.json`; anchor.click();
+    URL.revokeObjectURL(url);
+    setPriceJsonStatus(`已导出 ${content.prices.length} 个定价项目。`);
+  }
+
+  function importPrices(raw = priceJson) {
+    try {
+      const parsed = JSON.parse(raw) as unknown;
+      if (!Array.isArray(parsed)) throw new Error("最外层必须是数组");
+      if (!parsed.length) throw new Error("文件里没有定价项目");
+      if (parsed.length > 30) throw new Error("最多导入 30 个项目");
+      const sections = new Set<PriceItem["section"]>(["梦占", "传讯", "现实问题咨询", "奇思妙想"]);
+      const statuses = new Set<PriceItem["status"]>(["available", "waitlist", "paused"]);
+      const seen = new Set<string>();
+      const prices = parsed.map((value, index) => {
+        if (!value || typeof value !== "object") throw new Error(`第 ${index + 1} 项不是对象`);
+        const item = value as Partial<PriceItem>;
+        if (!sections.has(item.section as PriceItem["section"])) throw new Error(`第 ${index + 1} 项的所属板块无效`);
+        const stringValue = (key: keyof PriceItem) => typeof item[key] === "string" ? String(item[key]).slice(0, 1200) : "";
+        let id = stringValue("id") || makeId("price");
+        if (seen.has(id)) id = makeId("price"); seen.add(id);
+        return {
+          id, section: item.section as PriceItem["section"], title: stringValue("title") || "未命名项目", description: stringValue("description"),
+          price: stringValue("price"), unit: stringValue("unit"), badge: stringValue("badge"), delivery: stringValue("delivery"),
+          turnaround: stringValue("turnaround"), followUp: stringValue("followUp"), suitableFor: stringValue("suitableFor"),
+          status: statuses.has(item.status as PriceItem["status"]) ? item.status as PriceItem["status"] : "available",
+          visible: item.visible !== false, featured: item.featured === true,
+        } satisfies PriceItem;
+      });
+      setContent((current) => ({ ...current, prices }));
+      setPriceJson(JSON.stringify(prices, null, 2));
+      setPriceJsonStatus(`已导入 ${prices.length} 个项目。请检查后点击页面底部“保存并发布”。`);
+    } catch (error) {
+      setPriceJsonStatus(`导入失败：${error instanceof Error ? error.message : "JSON 格式不正确"}`);
+    }
+  }
+
+  async function importPriceFile(file?: File) {
+    if (!file) return;
+    if (file.size > 1024 * 1024) return setPriceJsonStatus("导入失败：文件不能超过 1MB。");
+    const raw = await file.text(); setPriceJson(raw); importPrices(raw);
+  }
 
   async function save() {
     setState("saving");
@@ -106,7 +157,8 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
       <ContactPolicyEditor content={content} setContent={setContent} />
 
       <CollapsiblePanel label="07 / SERVICES" title="服务项目与定价" defaultOpen><section className="editor-section">
-        <div className="editor-title"><div><span>07 / SERVICES</span><h2>服务项目与定价</h2></div></div>
+        <div className="editor-title"><div><span>07 / SERVICES</span><h2>服务项目与定价</h2></div><button className="admin-add" type="button" onClick={exportPrices}>导出定价 JSON</button></div>
+        <details className="price-json-panel"><summary>批量导入 / 备份定价 JSON</summary><div className="price-json-tools"><p>导出会下载一个只包含定价项目的 JSON 文件。导入会替换下方全部项目，但必须再点击页面底部“保存并发布”才会正式生效。</p><div><label className="price-file-button">选择 JSON 文件<input type="file" accept="application/json,.json" onChange={(event) => importPriceFile(event.target.files?.[0])} /></label><button type="button" onClick={() => setPriceJson(JSON.stringify(content.prices, null, 2))}>把当前定价放入编辑框</button><button className="primary-admin" type="button" onClick={() => importPrices()}>一键导入编辑框内容</button></div><textarea rows={14} spellCheck={false} value={priceJson} onChange={(event) => setPriceJson(event.target.value)} placeholder={'[\n  {\n    "section": "现实问题咨询",\n    "title": "项目名称",\n    "price": "88"\n  }\n]'} /><strong className={priceJsonStatus.startsWith("导入失败") ? "is-error" : ""}>{priceJsonStatus}</strong></div></details>
         <div className="editor-price-groups">
           {priceGroups.map((group) => {
             const items = content.prices.filter((item) => item.section === group.section);
