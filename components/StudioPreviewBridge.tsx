@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import type { TypographySettings } from "../lib/content-types";
+import type { PageTextStyle, TypographySettings } from "../lib/content-types";
 import { fontStack } from "../lib/typography";
 
 type DraftMessage = {
@@ -10,6 +10,7 @@ type DraftMessage = {
   baseline: Record<string, string>;
   keys: string[];
   typography?: TypographySettings;
+  fieldStyles?: Record<string, PageTextStyle>;
   scope?: string;
 };
 
@@ -76,7 +77,15 @@ export default function StudioPreviewBridge() {
       for (const [key, elements] of mapping) {
         const next = message.pageText[key];
         if (typeof next !== "string") continue;
-        for (const element of elements) if (element.textContent !== next) element.textContent = next;
+        for (const element of elements) {
+          if (element.textContent !== next) element.textContent = next;
+          const fieldStyle = message.fieldStyles?.[key] || {};
+          if (!element.dataset.copyBaseFontSize) element.dataset.copyBaseFontSize = getComputedStyle(element).fontSize;
+          element.style.setProperty("display", fieldStyle.hidden ? "none" : "", fieldStyle.hidden ? "important" : "");
+          element.style.setProperty("font-family", fieldStyle.font ? fontStack(fieldStyle.font) : "", fieldStyle.font ? "important" : "");
+          element.style.setProperty("font-size", fieldStyle.sizeScale !== undefined ? `${Number.parseFloat(element.dataset.copyBaseFontSize) * fieldStyle.sizeScale}px` : "", fieldStyle.sizeScale !== undefined ? "important" : "");
+          element.style.setProperty("letter-spacing", fieldStyle.letterSpacing !== undefined ? `${fieldStyle.letterSpacing}em` : "", fieldStyle.letterSpacing !== undefined ? "important" : "");
+        }
       }
       if (message.typography) {
         const root = document.querySelector<HTMLElement>(".public-page");
@@ -128,7 +137,7 @@ export default function StudioPreviewBridge() {
 
     function onMessage(event: MessageEvent) {
       if (event.origin !== window.location.origin) return;
-      const data = event.data as { type?: string; key?: unknown; position?: unknown; pageText?: Record<string, string>; baseline?: Record<string, string>; keys?: string[] };
+      const data = event.data as { type?: string; key?: unknown; position?: unknown; pageText?: Record<string, string>; baseline?: Record<string, string>; keys?: string[]; fieldStyles?: Record<string, PageTextStyle> };
       if (data?.type === "bubu-preview:focus" && typeof data.key === "string") {
         const target = mapping.get(data.key)?.find((element) => document.contains(element));
         target?.scrollIntoView({ behavior: "smooth", block: "center" });

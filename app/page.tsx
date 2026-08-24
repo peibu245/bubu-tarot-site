@@ -51,7 +51,7 @@ export default async function Home() {
 
   return (
     <main className="public-page">
-      <PublicTypography settings={content.typography} />
+      <PublicTypography settings={content.typography} pageText={content.pageText} fieldStyles={content.pageTextStyles} />
       <SiteHeader copy={copy} />
 
       <section className="home-hero">

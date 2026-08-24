@@ -18,7 +18,7 @@ export default async function PoliciesPage() {
   ];
   return (
     <main className="public-page policy-page">
-      <PublicTypography settings={content.typography} />
+      <PublicTypography settings={content.typography} pageText={content.pageText} fieldStyles={content.pageTextStyles} />
       <SiteHeader copy={copy} />
       <section className="policy-hero"><p className="micro-label">{t("policiesEyebrow")}</p><h1>{t("policiesTitle")}</h1><p>{content.policies.version} · {t("policyEffectiveLabel")} {content.policies.effectiveDate || t("policyMissingDate")}</p></section>
       <CustomContentZone blocks={content.richBlocks} page="policies" slot="afterHero" />

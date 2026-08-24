@@ -33,7 +33,7 @@ export default async function PolicyPage({ params }: { params: Promise<{ slug: s
 
   return (
     <main className="public-page policy-page">
-      <PublicTypography settings={content.typography} />
+      <PublicTypography settings={content.typography} pageText={content.pageText} fieldStyles={content.pageTextStyles} />
       <SiteHeader copy={content.pageText} />
       <article className="policy-document">
         <div className="policy-document-head"><p className="micro-label">{t(`policies${slug.charAt(0).toUpperCase()}${slug.slice(1)}Label`, item.label)}</p><h1>{t(titleKey, item.title)}</h1><p>{content.policies.version} · {t("policyEffectiveLabel", "生效日期")} {content.policies.effectiveDate || t("policyMissingDate", "未填写")}</p></div>

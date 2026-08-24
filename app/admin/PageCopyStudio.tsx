@@ -2,8 +2,9 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Dispatch, DragEvent, SetStateAction } from "react";
-import type { RichBlockKind, RichContentBlock, RichContentItem, SiteContent } from "../../lib/content-types";
+import type { FontChoice, PageTextStyle, RichBlockKind, RichContentBlock, RichContentItem, SiteContent } from "../../lib/content-types";
 import { copyPages } from "../../lib/page-copy-schema";
+import { fontOptions } from "../../lib/typography";
 import CollapsiblePanel from "./CollapsiblePanel";
 
 const makeId = (prefix = "block") => `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
@@ -63,8 +64,9 @@ export default function PageCopyStudio({ content, setContent }: { content: SiteC
     baseline: baselinePageText,
     keys: activePage.fields.map((field) => field.key),
     typography: content.typography,
+    fieldStyles: content.pageTextStyles,
     scope: activePage.id,
-  }), [activePage, baselinePageText, content.pageText, content.typography]);
+  }), [activePage, baselinePageText, content.pageText, content.pageTextStyles, content.typography]);
 
   function postPreview() {
     if (!iframeRef.current?.contentWindow) return;
@@ -107,6 +109,16 @@ export default function PageCopyStudio({ content, setContent }: { content: SiteC
   }, [activePage]);
 
   const patchText = (key: string, value: string) => setContent((current) => ({ ...current, pageText: { ...current.pageText, [key]: value } }));
+  const patchTextStyle = (key: string, patch: Partial<PageTextStyle>) => setContent((current) => {
+    const next = { ...(current.pageTextStyles[key] || {}), ...patch };
+    for (const name of Object.keys(next) as Array<keyof PageTextStyle>) if (next[name] === undefined || next[name] === false) delete next[name];
+    const styles = { ...current.pageTextStyles };
+    if (Object.keys(next).length) styles[key] = next; else delete styles[key];
+    return { ...current, pageTextStyles: styles };
+  });
+  const resetTextStyle = (key: string) => setContent((current) => {
+    const styles = { ...current.pageTextStyles }; delete styles[key]; return { ...current, pageTextStyles: styles };
+  });
   const patchBlock = (id: string, patch: Partial<RichContentBlock>) => setContent((current) => ({ ...current, richBlocks: current.richBlocks.map((block) => block.id === id ? { ...block, ...patch } : block) }));
 
   async function copyCurrentJson() {
@@ -192,8 +204,18 @@ export default function PageCopyStudio({ content, setContent }: { content: SiteC
                 <div className="copy-field-list">
                   {filtered.map((field) => {
                     const value = content.pageText[field.key] ?? "";
+                    const fieldStyle = content.pageTextStyles[field.key] || {};
                     const multiline = field.multiline || value.length > 54 || value.includes("\n");
-                    return <label className="copy-field" data-copy-field-key={field.key} key={field.key}><span><b>{field.label}</b><code>{field.key}</code></span>{field.hint && <small>{field.hint}</small>}{multiline ? <textarea rows={Math.min(7, Math.max(3, value.split("\n").length + 2))} value={value} onFocus={() => focusPreview(field.key)} onChange={(event) => patchText(field.key, event.target.value)} /> : <input value={value} onFocus={() => focusPreview(field.key)} onChange={(event) => patchText(field.key, event.target.value)} />}</label>;
+                    return <article className={`copy-field ${fieldStyle.hidden ? "is-hidden-field" : ""}`} data-copy-field-key={field.key} key={field.key}>
+                      <span><b>{field.label}</b><code>{field.key}</code></span>{field.hint && <small>{field.hint}</small>}
+                      {multiline ? <textarea rows={Math.min(7, Math.max(3, value.split("\n").length + 2))} value={value} onFocus={() => focusPreview(field.key)} onChange={(event) => patchText(field.key, event.target.value)} /> : <input value={value} onFocus={() => focusPreview(field.key)} onChange={(event) => patchText(field.key, event.target.value)} />}
+                      <div className="copy-field-actions"><label><input type="checkbox" checked={!fieldStyle.hidden} onChange={(event) => patchTextStyle(field.key, { hidden: !event.target.checked })} /> 显示这段文字</label><details><summary>单独调整字体</summary><div className="copy-field-style-grid">
+                        <label>字体<select value={fieldStyle.font || ""} onChange={(event) => patchTextStyle(field.key, { font: (event.target.value || undefined) as FontChoice | undefined })}><option value="">跟随全站</option>{fontOptions.map((option) => <option value={option.value} key={option.value}>{option.label}</option>)}</select></label>
+                        <label>字号 <output>{Math.round((fieldStyle.sizeScale ?? 1) * 100)}%</output><input type="range" min="0.7" max="1.6" step="0.05" value={fieldStyle.sizeScale ?? 1} onChange={(event) => patchTextStyle(field.key, { sizeScale: Number(event.target.value) })} /></label>
+                        <label>字间距 <output>{(fieldStyle.letterSpacing ?? 0).toFixed(2)}em</output><input type="range" min="-0.08" max="0.2" step="0.01" value={fieldStyle.letterSpacing ?? 0} onChange={(event) => patchTextStyle(field.key, { letterSpacing: Number(event.target.value) })} /></label>
+                        <button type="button" onClick={() => resetTextStyle(field.key)}>恢复默认样式</button>
+                      </div></details></div>
+                    </article>;
                   })}
                 </div>
               </>}

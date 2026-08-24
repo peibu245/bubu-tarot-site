@@ -101,7 +101,7 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
 
   return (
     <main className={`public-page service-page ${data.tone}`}>
-      <PublicTypography settings={content.typography} />
+      <PublicTypography settings={content.typography} pageText={content.pageText} fieldStyles={content.pageTextStyles} />
       <SiteHeader copy={copy} />
       <section className="service-hero">
         <div><p className="micro-label">{sectionCopy.eyebrow}</p><h1>{sectionCopy.title}</h1><p className="editable-copy">{sectionCopy.lead}</p></div>

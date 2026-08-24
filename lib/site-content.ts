@@ -1,4 +1,4 @@
-import type { CardFact, ContactChannel, KnowledgeCard, PolicySettings, PriceItem, Promotion, RichContentBlock, SiteContent, SpreadGuide, TypographySettings } from "./content-types";
+import type { CardFact, ContactChannel, KnowledgeCard, PageTextStyle, PolicySettings, PriceItem, Promotion, RichContentBlock, SiteContent, SpreadGuide, TypographySettings } from "./content-types";
 import { defaultContactChannels, defaultPolicies } from "./legal-defaults";
 import { defaultCardFacts, defaultSpreadGuides } from "./educational-defaults";
 import { defaultTypography, isFontChoice } from "./typography";
@@ -81,6 +81,7 @@ export const defaultContent: SiteContent = {
   cardFacts: defaultCardFacts,
   spreadGuides: defaultSpreadGuides,
   pageText: defaultPageText,
+  pageTextStyles: {},
   richBlocks: [],
   typography: { ...defaultTypography },
 };
@@ -470,6 +471,20 @@ function cleanPageText(value: unknown): Record<string, string> {
   }));
 }
 
+function cleanPageTextStyles(value: unknown): Record<string, PageTextStyle> {
+  const source = value && typeof value === "object" ? value as Record<string, unknown> : {};
+  const allowed = new Set(Object.keys(defaultPageText));
+  return Object.fromEntries(Object.entries(source).filter(([key, raw]) => allowed.has(key) && raw && typeof raw === "object").map(([key, raw]) => {
+    const style = raw as PageTextStyle;
+    const cleaned: PageTextStyle = {};
+    if (style.hidden === true) cleaned.hidden = true;
+    if (isFontChoice(style.font)) cleaned.font = style.font;
+    if (style.sizeScale !== undefined) cleaned.sizeScale = numberWithin(style.sizeScale, 1, 0.7, 1.6);
+    if (style.letterSpacing !== undefined) cleaned.letterSpacing = numberWithin(style.letterSpacing, 0, -0.08, 0.2);
+    return [key, cleaned];
+  }).filter(([, style]) => Object.keys(style as PageTextStyle).length));
+}
+
 function numberWithin(value: unknown, fallback: number, min: number, max: number) {
   const number = typeof value === "number" ? value : Number(value);
   return Number.isFinite(number) ? Math.min(max, Math.max(min, number)) : fallback;
@@ -508,6 +523,7 @@ export function cleanContent(value: unknown): SiteContent {
     cardFacts: Array.isArray(item.cardFacts) ? item.cardFacts.slice(0, 260).map(cleanCardFact).filter((fact) => fact.cardId && fact.text) : defaultContent.cardFacts,
     spreadGuides: Array.isArray(item.spreadGuides) ? item.spreadGuides.slice(0, 30).map(cleanSpreadGuide) : defaultContent.spreadGuides,
     pageText: cleanPageText(item.pageText),
+    pageTextStyles: cleanPageTextStyles(item.pageTextStyles),
     richBlocks: Array.isArray(item.richBlocks) ? item.richBlocks.slice(0, 40).map(cleanRichBlock) : [],
     typography: cleanTypography(item.typography),
   };

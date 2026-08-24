@@ -29,9 +29,9 @@ export default async function BookingPage() {
   const boundaries = [1, 2, 3, 4].map((n) => ({ label: t(`bookingBoundary${n}Label`), text: t(`bookingBoundary${n}Text`) }));
   return (
     <main className="public-page booking-page">
-      <PublicTypography settings={content.typography} />
+      <PublicTypography settings={content.typography} pageText={content.pageText} fieldStyles={content.pageTextStyles} />
       <SiteHeader copy={copy} />
-      <section className="booking-hero"><div className="booking-avatar"><img src="/brand-mark.jpg" alt="" /></div><p className="micro-label">{t("bookingEyebrow")}</p><h1>先来聊聊，再决定</h1><p className="editable-copy">不需要先整理成完整的问题。梦向、现实问题、角色与创作主题都可以先来聊，我会帮你确认适合的项目。</p><span className={content.bookingsOpen ? "status-pill is-open" : "status-pill"}>{content.bookingsOpen ? t("statusOpen") : t("statusClosed")}</span></section>
+      <section className="booking-hero"><div className="booking-avatar"><img src="/brand-mark.jpg" alt="" /></div><p className="micro-label">{t("bookingEyebrow")}</p><h1>{t("bookingTitle")}</h1><p className="editable-copy">{t("bookingLead")}</p><span className={content.bookingsOpen ? "status-pill is-open" : "status-pill"}>{content.bookingsOpen ? t("statusOpen") : t("statusClosed")}</span></section>
       <CustomContentZone blocks={content.richBlocks} page="booking" slot="afterHero" />
       <div className="booking-flow">
         <section className="flow-step"><div className="flow-title"><span>1</span><p>{t("bookingStep1Label")}</p><h2>{t("bookingStep1Title")}</h2></div><div className="booking-entry-grid">{entries.map((entry) => { const count = prices.filter((item) => entry.sections.includes(item.section)).length; return <Link className={`booking-entry-card ${entry.className}`} href={entry.href} key={entry.href}><div className="booking-entry-meta"><span>{entry.eyebrow}</span><b>{count ? `${count} ${t("itemCountSuffix")}` : t("pricingPending")}</b></div><h3>{entry.title}</h3><p className="editable-copy">{entry.summary}</p><strong>{t("bookingEntryAction")}</strong></Link>; })}</div></section>

@@ -77,6 +77,13 @@ export type TypographySettings = {
   lineHeight: number;
 };
 
+export type PageTextStyle = {
+  hidden?: boolean;
+  font?: FontChoice;
+  sizeScale?: number;
+  letterSpacing?: number;
+};
+
 export type ContactChannelKind = "wechat" | "xianyu" | "qq" | "xiaohongshu" | "douyin" | "link";
 
 export type ContactChannel = {
@@ -149,6 +156,7 @@ export type SiteContent = {
   cardFacts: CardFact[];
   spreadGuides: SpreadGuide[];
   pageText: Record<string, string>;
+  pageTextStyles: Record<string, PageTextStyle>;
   richBlocks: RichContentBlock[];
   typography: TypographySettings;
 };
