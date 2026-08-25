@@ -162,6 +162,7 @@ button,input,textarea,select { font:inherit; }
 .prepare-grid h3 { margin:35px 0 10px; font:600 17px ui-serif,"Songti SC",serif; }
 .prepare-grid p { margin:0; color:var(--muted); font-size:10px; line-height:1.75; }
 .availability-strip { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:9px; }
+.availability-swipe-hint { display:none; }
 .availability-day { position:relative; display:flex; min-height:132px; padding:17px 13px; flex-direction:column; border:1px solid var(--line); border-radius:14px; background:var(--white); }
 .availability-day>span { color:var(--muted); font:600 12px var(--reader-ui-font); }
 .availability-day>b { margin-top:5px; font:500 20px var(--reader-heading-font); }
@@ -1163,6 +1164,14 @@ body { font-size:16px; line-height:1.7; }
   .booking-hero h1 { width:100%; font-size:clamp(38px,12vw,48px); line-height:1.12; }
   .booking-flow,.policy-card-grid,.policy-short-note,.service-hero,.dream-service-split,.service-intro,.service-details,.service-pricing,.service-promotions,.service-page-cta,.public-footer { max-width:100%; }
   .booking-entry-card,.booking-price-card,.prepare-grid article,.contact-panel,.service-boundary,.policy-card,.price-pending,.dream-service-split article { min-width:0; max-width:100%; }
+  .availability-section { overflow:visible; }
+  .availability-swipe-hint { display:block; margin:-6px 0 10px; color:var(--muted); font:600 11px var(--reader-ui-font); text-align:right; }
+  .availability-strip { display:flex; width:calc(100% + 14px); max-width:none; margin-right:-14px; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; }
+  .availability-day { width:auto; min-width:0; max-width:none; flex:0 0 clamp(132px,42vw,154px); min-height:154px; padding:18px 16px; scroll-snap-align:start; }
+  .availability-day>span { font-size:13px; white-space:nowrap; }
+  .availability-day>b { font-size:23px; white-space:nowrap; }
+  .availability-day>i { font-size:13px; white-space:nowrap; }
+  .availability-day>small { font-size:11px; white-space:nowrap; }
   .booking-entry-meta,.booking-price-top,.service-price-heading,.contact-unlocked-top { min-width:0; }
   .booking-entry-card p,.booking-price-card p,.dream-service-split p,.service-intro>p,.service-hero div>p:last-child,.policy-card p,.policy-short-note p { overflow-wrap:anywhere; word-break:break-word; }
 }
