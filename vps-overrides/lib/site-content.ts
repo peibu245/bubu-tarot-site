@@ -1,11 +1,27 @@
 import { copyFile, mkdir, readFile, readdir, rename, stat, unlink, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
-import type { CardFact, ContactChannel, KnowledgeCard, PageTextStyle, PolicySettings, PriceItem, Promotion, RichContentBlock, SiteContent, SpreadGuide, TypographySettings } from "./content-types";
+import type { AvailabilitySettings, CardFact, ContactChannel, KnowledgeCard, PageTextStyle, PolicySettings, PriceItem, Promotion, RichContentBlock, SiteContent, SpreadGuide, TypographySettings } from "./content-types";
 import { defaultContactChannels, defaultPolicies } from "./legal-defaults";
 import { defaultCardFacts, defaultSpreadGuides } from "./educational-defaults";
 import { defaultTypography, isFontChoice } from "./typography";
 
-const CONTENT_VERSION = 15;
+const CONTENT_VERSION = 16;
+
+const defaultAvailability: AvailabilitySettings = {
+  visible: true,
+  title: "本周可约",
+  responseText: "当前接单中，一般 24 小时内回复。",
+  rushText: "急单请备注“加急”，会根据当天安排确认是否能接。",
+  days: [
+    { id: "day-1", weekday: "周二", date: "8.26", status: "available", note: "" },
+    { id: "day-2", weekday: "周三", date: "8.27", status: "available", note: "" },
+    { id: "day-3", weekday: "周四", date: "8.28", status: "rest", note: "" },
+    { id: "day-4", weekday: "周五", date: "8.29", status: "available", note: "" },
+    { id: "day-5", weekday: "周六", date: "8.30", status: "limited", note: "剩 1 位" },
+    { id: "day-6", weekday: "周日", date: "8.31", status: "rest", note: "" },
+    { id: "day-7", weekday: "周一", date: "9.1", status: "full", note: "" },
+  ],
+};
 
 export const defaultPageText: Record<string, string> = {
   siteBrand: "不不tarot", navDream: "梦向解读", navReality: "现实问题咨询", navBooking: "预约入口", navNotes: "抽一张", navIdeas: "奇思妙想", navAction: "选择入口",
@@ -53,6 +69,7 @@ const DATA_FILE = process.env.BUBU_DATA_FILE || "/data/site-content.json";
 export const defaultContent: SiteContent = {
   contentVersion: CONTENT_VERSION,
   bookingsOpen: true,
+  availability: defaultAvailability,
   priceNotice: "现实问题咨询价格以页面为准。问题跨度较大或涉及多个独立主题时，会在接单前确认是否需要拆单。",
   dreamPriceNotice: "梦占与传讯分别计价，具体方案正在整理中，暂不展示价格。",
   contactNote: "预约时请发送：问题类型 + 想问的问题 + 必要背景",
@@ -364,6 +381,28 @@ function cleanPromotion(value: unknown, index: number): Promotion {
   };
 }
 
+function cleanAvailability(value: unknown): AvailabilitySettings {
+  const item = value && typeof value === "object" ? value as Partial<AvailabilitySettings> : {};
+  const statuses = new Set(["available", "limited", "full", "rest"]);
+  const days = Array.isArray(item.days) ? item.days.slice(0, 7).map((raw, index) => {
+    const day = raw && typeof raw === "object" ? raw as Partial<AvailabilitySettings["days"][number]> : {};
+    return {
+      id: text(day.id, 64) || `day-${index + 1}`,
+      weekday: text(day.weekday, 8) || `第 ${index + 1} 天`,
+      date: text(day.date, 16),
+      status: statuses.has(String(day.status)) ? day.status as AvailabilitySettings["days"][number]["status"] : "available",
+      note: text(day.note, 30),
+    };
+  }) : defaultAvailability.days;
+  return {
+    visible: item.visible !== false,
+    title: text(item.title, 30) || defaultAvailability.title,
+    responseText: text(item.responseText, 180) || defaultAvailability.responseText,
+    rushText: text(item.rushText, 180) || defaultAvailability.rushText,
+    days,
+  };
+}
+
 function cleanKnowledgeCard(value: unknown, index: number): KnowledgeCard {
   const item = (value && typeof value === "object" ? value : {}) as Partial<KnowledgeCard>;
   return {
@@ -532,6 +571,7 @@ export function cleanContent(value: unknown): SiteContent {
   return {
     contentVersion: typeof item.contentVersion === "number" ? item.contentVersion : 0,
     bookingsOpen: item.bookingsOpen !== false,
+    availability: cleanAvailability(item.availability),
     priceNotice: text(item.priceNotice, 220),
     dreamPriceNotice: text(item.dreamPriceNotice, 220) || defaultContent.dreamPriceNotice,
     contactNote: text(item.contactNote, 220),

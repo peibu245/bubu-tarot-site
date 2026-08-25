@@ -161,6 +161,21 @@ button,input,textarea,select { font:inherit; }
 .prepare-grid span { color:var(--accent); font:10px ui-serif,serif; }
 .prepare-grid h3 { margin:35px 0 10px; font:600 17px ui-serif,"Songti SC",serif; }
 .prepare-grid p { margin:0; color:var(--muted); font-size:10px; line-height:1.75; }
+.availability-strip { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:9px; }
+.availability-day { position:relative; display:flex; min-height:132px; padding:17px 13px; flex-direction:column; border:1px solid var(--line); border-radius:14px; background:var(--white); }
+.availability-day>span { color:var(--muted); font:600 12px var(--reader-ui-font); }
+.availability-day>b { margin-top:5px; font:500 20px var(--reader-heading-font); }
+.availability-day>i { display:flex; align-items:center; gap:7px; margin-top:auto; color:var(--ink); font:600 12px var(--reader-ui-font); font-style:normal; }
+.availability-day>i em { width:8px; height:8px; flex:none; border-radius:50%; background:var(--accent); }
+.availability-day>small { margin-top:5px; color:var(--muted); font-size:10px; }
+.availability-day.is-limited>i em { background:#c79738; }
+.availability-day.is-full>i em { background:#a85a63; }
+.availability-day.is-rest>i em { border:1px solid #a9a1aa; background:transparent; }
+.availability-day.is-rest { background:#f5f1ed; }
+.availability-notes { margin-top:18px; padding:16px 18px; border-left:3px solid var(--accent); background:color-mix(in srgb,var(--accent) 6%,white); }
+.availability-notes p { margin:0; color:var(--muted); font-size:14px; line-height:1.75; }
+.availability-notes p+p { margin-top:4px; }
+.availability-notes b { color:var(--ink); }
 .booking-offers { grid-template-columns:1fr; }
 .contact-panel { padding:34px; border:1px solid #bcdac9; border-radius:16px; background:var(--accent-soft); }
 .contact-panel p { margin:0 0 24px; color:#4d5b53; font-size:12px; line-height:1.8; }
@@ -278,6 +293,10 @@ button,input,textarea,select { font:inherit; }
   .booking-entry-card h3 { margin-top:40px; font-size:31px; }
   .prepare-grid { grid-template-columns:1fr; }
   .prepare-grid article { min-height:150px; }
+  .availability-strip { display:flex; width:calc(100% + 14px); margin-right:-14px; overflow-x:auto; scroll-snap-type:x proximity; scrollbar-width:none; padding:2px 14px 12px 0; }
+  .availability-strip::-webkit-scrollbar { display:none; }
+  .availability-day { width:124px; min-width:124px; min-height:142px; scroll-snap-align:start; }
+  .availability-notes { margin-top:12px; }
   .service-boundary { padding:28px 22px; grid-template-columns:1fr; gap:25px; }
   .article-index { grid-template-columns:1fr; }
   .knowledge-article { padding:42px 0; grid-template-columns:1fr; gap:25px; }

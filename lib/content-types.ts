@@ -87,6 +87,24 @@ export type PageTextStyle = {
   letterSpacing?: number;
 };
 
+export type AvailabilityStatus = "available" | "limited" | "full" | "rest";
+
+export type AvailabilityDay = {
+  id: string;
+  weekday: string;
+  date: string;
+  status: AvailabilityStatus;
+  note: string;
+};
+
+export type AvailabilitySettings = {
+  visible: boolean;
+  title: string;
+  responseText: string;
+  rushText: string;
+  days: AvailabilityDay[];
+};
+
 export type ContactChannelKind = "wechat" | "xianyu" | "qq" | "xiaohongshu" | "douyin" | "link";
 
 export type ContactChannel = {
@@ -145,6 +163,7 @@ export type RichContentBlock = {
 export type SiteContent = {
   contentVersion: number;
   bookingsOpen: boolean;
+  availability: AvailabilitySettings;
   priceNotice: string;
   dreamPriceNotice: string;
   contactNote: string;

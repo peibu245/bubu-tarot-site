@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { CSSProperties } from "react";
-import type { CardFact, FontChoice, KnowledgeCard, PriceItem, Promotion, SiteContent, SpreadGuide } from "../../lib/content-types";
+import type { AvailabilityDay, CardFact, FontChoice, KnowledgeCard, PriceItem, Promotion, SiteContent, SpreadGuide } from "../../lib/content-types";
 import { lenormandCards, rwsCards } from "../../lib/card-decks";
 import ContactPolicyEditor from "./ContactPolicyEditor";
 import PageCopyStudio from "./PageCopyStudio";
@@ -34,6 +34,7 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
 
   const patchPrice = (id: string, patch: Partial<PriceItem>) => setContent((current) => ({ ...current, prices: current.prices.map((item) => item.id === id ? { ...item, ...patch } : item) }));
   const patchPromo = (id: string, patch: Partial<Promotion>) => setContent((current) => ({ ...current, promotions: current.promotions.map((item) => item.id === id ? { ...item, ...patch } : item) }));
+  const patchAvailabilityDay = (id: string, patch: Partial<AvailabilityDay>) => setContent((current) => ({ ...current, availability: { ...current.availability, days: current.availability.days.map((item) => item.id === id ? { ...item, ...patch } : item) } }));
   const patchKnowledge = (id: string, patch: Partial<KnowledgeCard>) => setContent((current) => ({ ...current, knowledgeCards: current.knowledgeCards.map((item) => item.id === id ? { ...item, ...patch } : item) }));
   const patchFact = (id: string, patch: Partial<CardFact>) => setContent((current) => ({ ...current, cardFacts: current.cardFacts.map((item) => item.id === id ? { ...item, ...patch } : item) }));
   const patchSpread = (id: string, patch: Partial<SpreadGuide>) => setContent((current) => ({ ...current, spreadGuides: current.spreadGuides.map((item) => item.id === id ? { ...item, ...patch } : item) }));
@@ -121,6 +122,22 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
         <label>现实问题咨询价格说明<textarea value={content.priceNotice} onChange={(event) => setContent({ ...content, priceNotice: event.target.value })} rows={2} /></label>
         <label>预约方式说明<textarea value={content.contactNote} onChange={(event) => setContent({ ...content, contactNote: event.target.value })} rows={2} /></label>
         <p className="manager-hint">微信、闲鱼和其他预约入口已移动到下方“联系方式”区域；公开页面不会再直接显示旧的单一预约链接。</p>
+        <div className="availability-admin wide-admin-row">
+          <div className="availability-admin-heading"><div><b>本周档期条</b><p>只展示轻量营业状态，不会变成月历或挂号表。</p></div><label><input type="checkbox" checked={content.availability.visible} onChange={(event) => setContent({ ...content, availability: { ...content.availability, visible: event.target.checked } })} /> 在预约页显示</label></div>
+          <div className="form-grid">
+            <label>区块标题<input value={content.availability.title} onChange={(event) => setContent({ ...content, availability: { ...content.availability, title: event.target.value } })} /></label>
+            <label>回复时间说明<input value={content.availability.responseText} onChange={(event) => setContent({ ...content, availability: { ...content.availability, responseText: event.target.value } })} /></label>
+            <label className="wide">加急说明<input value={content.availability.rushText} onChange={(event) => setContent({ ...content, availability: { ...content.availability, rushText: event.target.value } })} /></label>
+          </div>
+          <div className="availability-day-editors">
+            {content.availability.days.map((day) => <article key={day.id}>
+              <input aria-label="星期" value={day.weekday} onChange={(event) => patchAvailabilityDay(day.id, { weekday: event.target.value })} />
+              <input aria-label="日期" value={day.date} onChange={(event) => patchAvailabilityDay(day.id, { date: event.target.value })} placeholder="8.26" />
+              <select aria-label="状态" value={day.status} onChange={(event) => patchAvailabilityDay(day.id, { status: event.target.value as AvailabilityDay["status"] })}><option value="available">可约</option><option value="limited">紧张</option><option value="full">已满</option><option value="rest">休息</option></select>
+              <input aria-label="补充说明" value={day.note} onChange={(event) => patchAvailabilityDay(day.id, { note: event.target.value })} placeholder="例如：剩 1 位" />
+            </article>)}
+          </div>
+        </div>
       </section></CollapsiblePanel>
 
       <PageCopyStudio content={content} setContent={setContent} />
