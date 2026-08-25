@@ -97,12 +97,28 @@ export type AvailabilityDay = {
   note: string;
 };
 
+export type AvailabilityRule = {
+  weekday: number;
+  status: AvailabilityStatus;
+  note: string;
+};
+
+export type AvailabilityOverride = {
+  date: string;
+  status: AvailabilityStatus;
+  note: string;
+};
+
 export type AvailabilitySettings = {
   visible: boolean;
   title: string;
   responseText: string;
   rushText: string;
-  days: AvailabilityDay[];
+  advanceDays: number;
+  weekly: AvailabilityRule[];
+  overrides: AvailabilityOverride[];
+  /** Kept only so older saved files can be read during migration. */
+  days?: AvailabilityDay[];
 };
 
 export type ContactChannelKind = "wechat" | "xianyu" | "qq" | "xiaohongshu" | "douyin" | "link";

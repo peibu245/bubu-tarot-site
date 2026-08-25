@@ -177,6 +177,46 @@ button,input,textarea,select { font:inherit; }
 .availability-notes p { margin:0; color:var(--muted); font-size:14px; line-height:1.75; }
 .availability-notes p+p { margin-top:4px; }
 .availability-notes b { color:var(--ink); }
+.availability-calendar { padding:20px; border:1px solid var(--line); border-radius:18px; background:rgba(255,255,255,.52); }
+.availability-toolbar,.availability-week-nav { display:flex; align-items:center; justify-content:space-between; gap:16px; }
+.availability-toolbar>div:first-child { display:grid; gap:3px; }
+.availability-toolbar b { font:600 17px var(--reader-heading-font); }
+.availability-toolbar span { color:var(--muted); font-size:11px; }
+.availability-view-toggle { display:flex; padding:4px; border:1px solid var(--line); border-radius:999px; background:var(--white); }
+.availability-view-toggle button { min-height:34px; padding:0 14px; border:0; border-radius:999px; background:transparent; color:var(--muted); cursor:pointer; }
+.availability-view-toggle button.is-active { background:var(--accent); color:white; }
+.availability-week-nav { margin:18px 0 10px; }
+.availability-week-nav button { border:0; background:transparent; color:var(--accent-strong); cursor:pointer; }
+.availability-week-nav button:disabled { opacity:.28; cursor:default; }
+.availability-week-nav span { color:var(--muted); font-size:11px; }
+.availability-public-grid { display:grid; gap:8px; }
+.availability-public-grid.is-week { grid-template-columns:repeat(7,minmax(0,1fr)); }
+.availability-public-grid.is-month,.availability-month-head { grid-template-columns:repeat(7,minmax(0,1fr)); }
+.availability-public-grid.is-month { display:grid; margin-top:7px; }
+.availability-month-head { display:grid; margin:18px 0 0; text-align:center; }
+.availability-month-head span { color:var(--muted); font:600 10px var(--reader-ui-font); }
+.availability-public-day { position:relative; min-width:0; min-height:128px; padding:15px 10px; display:flex; flex-direction:column; align-items:flex-start; border:1px solid var(--line); border-radius:13px; background:var(--white); color:var(--ink); text-align:left; cursor:pointer; }
+.availability-public-day>span { color:var(--muted); font:600 11px var(--reader-ui-font); }
+.availability-public-day>b { margin-top:5px; font:500 19px var(--reader-heading-font); }
+.availability-public-day>i { display:flex; align-items:center; gap:6px; margin-top:auto; font:600 11px var(--reader-ui-font); font-style:normal; }
+.availability-public-day>i em { width:7px; height:7px; border-radius:50%; background:var(--accent); }
+.availability-public-day>small { margin-top:4px; color:var(--muted); font-size:9px; }
+.availability-public-day.is-limited>i em { background:#c79738; }
+.availability-public-day.is-full>i em { background:#a85a63; }
+.availability-public-day.is-rest>i em { border:1px solid #aaa2ab; background:transparent; }
+.availability-public-day:disabled { background:#f4f0ec; opacity:.72; cursor:default; }
+.availability-public-day.is-selected { border-color:var(--accent); box-shadow:0 0 0 3px rgba(112,80,126,.12); }
+.availability-public-grid.is-month .availability-public-day { min-height:76px; padding:9px 7px; border-radius:10px; }
+.availability-public-grid.is-month .availability-public-day>span { display:none; }
+.availability-public-grid.is-month .availability-public-day>b { margin:0; font-size:15px; }
+.availability-public-grid.is-month .availability-public-day>i { margin-top:auto; font-size:9px; }
+.availability-public-grid.is-month .availability-public-day>small { display:none; }
+.availability-calendar-empty { min-height:76px; }
+.availability-selection { margin-top:14px; padding:16px; display:flex; align-items:center; justify-content:space-between; gap:18px; border-radius:13px; background:var(--accent-soft); }
+.availability-selection>div { display:grid; gap:3px; }
+.availability-selection span,.availability-selection small { color:var(--muted); font-size:10px; }
+.availability-selection b { font:600 17px var(--reader-heading-font); }
+.availability-selection a { padding:11px 14px; border-radius:9px; background:var(--accent); color:white; font:700 11px var(--reader-ui-font); white-space:nowrap; }
 .booking-offers { grid-template-columns:1fr; }
 .contact-panel { padding:34px; border:1px solid #bcdac9; border-radius:16px; background:var(--accent-soft); }
 .contact-panel p { margin:0 0 24px; color:#4d5b53; font-size:12px; line-height:1.8; }
@@ -1172,6 +1212,19 @@ body { font-size:16px; line-height:1.7; }
   .availability-day>b { font-size:23px; white-space:nowrap; }
   .availability-day>i { font-size:13px; white-space:nowrap; }
   .availability-day>small { font-size:11px; white-space:nowrap; }
+  .availability-calendar { padding:14px; }
+  .availability-toolbar { align-items:flex-start; }
+  .availability-view-toggle button { padding:0 10px; font-size:11px; }
+  .availability-public-grid.is-week { display:flex; width:calc(100% + 14px); margin-right:-14px; padding:2px 14px 10px 0; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; }
+  .availability-public-grid.is-week::-webkit-scrollbar { display:none; }
+  .availability-public-grid.is-week .availability-public-day { flex:0 0 132px; min-height:148px; scroll-snap-align:start; }
+  .availability-public-grid.is-month { gap:5px; }
+  .availability-public-grid.is-month .availability-public-day { min-height:66px; padding:7px 5px; }
+  .availability-public-grid.is-month .availability-public-day>b { font-size:14px; }
+  .availability-public-grid.is-month .availability-public-day>i { gap:3px; font-size:8px; }
+  .availability-public-grid.is-month .availability-public-day>i em { width:5px; height:5px; }
+  .availability-selection { align-items:stretch; flex-direction:column; }
+  .availability-selection a { text-align:center; }
   .booking-entry-meta,.booking-price-top,.service-price-heading,.contact-unlocked-top { min-width:0; }
   .booking-entry-card p,.booking-price-card p,.dream-service-split p,.service-intro>p,.service-hero div>p:last-child,.policy-card p,.policy-short-note p { overflow-wrap:anywhere; word-break:break-word; }
 }

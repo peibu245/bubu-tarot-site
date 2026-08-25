@@ -5,22 +5,21 @@ import { defaultContactChannels, defaultPolicies } from "./legal-defaults";
 import { defaultCardFacts, defaultSpreadGuides } from "./educational-defaults";
 import { defaultTypography, isFontChoice } from "./typography";
 
-const CONTENT_VERSION = 16;
+const CONTENT_VERSION = 17;
 
 const defaultAvailability: AvailabilitySettings = {
   visible: true,
   title: "本周可约",
   responseText: "当前接单中，一般 24 小时内回复。",
   rushText: "急单请备注“加急”，会根据当天安排确认是否能接。",
-  days: [
-    { id: "day-1", weekday: "周二", date: "8.26", status: "available", note: "" },
-    { id: "day-2", weekday: "周三", date: "8.27", status: "available", note: "" },
-    { id: "day-3", weekday: "周四", date: "8.28", status: "rest", note: "" },
-    { id: "day-4", weekday: "周五", date: "8.29", status: "available", note: "" },
-    { id: "day-5", weekday: "周六", date: "8.30", status: "limited", note: "剩 1 位" },
-    { id: "day-6", weekday: "周日", date: "8.31", status: "rest", note: "" },
-    { id: "day-7", weekday: "周一", date: "9.1", status: "full", note: "" },
+  advanceDays: 30,
+  weekly: [
+    { weekday: 0, status: "rest", note: "" }, { weekday: 1, status: "rest", note: "" },
+    { weekday: 2, status: "available", note: "" }, { weekday: 3, status: "available", note: "" },
+    { weekday: 4, status: "rest", note: "" }, { weekday: 5, status: "available", note: "" },
+    { weekday: 6, status: "limited", note: "" },
   ],
+  overrides: [],
 };
 
 export const defaultPageText: Record<string, string> = {
@@ -384,22 +383,23 @@ function cleanPromotion(value: unknown, index: number): Promotion {
 function cleanAvailability(value: unknown): AvailabilitySettings {
   const item = value && typeof value === "object" ? value as Partial<AvailabilitySettings> : {};
   const statuses = new Set(["available", "limited", "full", "rest"]);
-  const days = Array.isArray(item.days) ? item.days.slice(0, 7).map((raw, index) => {
-    const day = raw && typeof raw === "object" ? raw as Partial<AvailabilitySettings["days"][number]> : {};
-    return {
-      id: text(day.id, 64) || `day-${index + 1}`,
-      weekday: text(day.weekday, 8) || `第 ${index + 1} 天`,
-      date: text(day.date, 16),
-      status: statuses.has(String(day.status)) ? day.status as AvailabilitySettings["days"][number]["status"] : "available",
-      note: text(day.note, 30),
-    };
-  }) : defaultAvailability.days;
+  const weeklySource = Array.isArray(item.weekly) ? item.weekly : [];
+  const weekly = defaultAvailability.weekly.map((fallback) => {
+    const raw = weeklySource.find((entry) => entry && typeof entry === "object" && Number((entry as { weekday?: unknown }).weekday) === fallback.weekday) as Partial<typeof fallback> | undefined;
+    return { weekday: fallback.weekday, status: raw && statuses.has(String(raw.status)) ? raw.status as typeof fallback.status : fallback.status, note: text(raw?.note, 30) };
+  });
+  const overrides = Array.isArray(item.overrides) ? item.overrides.slice(0, 120).map((raw) => {
+    const row = raw && typeof raw === "object" ? raw as { date?: unknown; status?: unknown; note?: unknown } : {};
+    return { date: text(row.date, 10), status: statuses.has(String(row.status)) ? row.status as AvailabilitySettings["overrides"][number]["status"] : "rest" as const, note: text(row.note, 30) };
+  }).filter((row) => /^\d{4}-\d{2}-\d{2}$/.test(row.date)) : [];
   return {
     visible: item.visible !== false,
     title: text(item.title, 30) || defaultAvailability.title,
     responseText: text(item.responseText, 180) || defaultAvailability.responseText,
     rushText: text(item.rushText, 180) || defaultAvailability.rushText,
-    days,
+    advanceDays: numberWithin(item.advanceDays, 30, 14, 45),
+    weekly,
+    overrides,
   };
 }
 
