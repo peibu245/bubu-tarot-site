@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { KnowledgeCard } from "../lib/content-types";
 
 type Copy = Record<string, string>;
@@ -33,7 +33,7 @@ export default function TipsTicker({ cards, copy }: { cards: KnowledgeCard[]; co
   const [currentId, setCurrentId] = useState<string | null>(tips[0]?.id ?? null);
   const [changing, setChanging] = useState(false);
 
-  function nextTip(immediate = false) {
+  const nextTip = useCallback((immediate = false) => {
     if (!tips.length) return;
     let bag: Bag | null = null;
     try { bag = validBag(JSON.parse(localStorage.getItem(STORAGE_KEY) || "null"), ids); } catch { bag = null; }
@@ -46,9 +46,12 @@ export default function TipsTicker({ cards, copy }: { cards: KnowledgeCard[]; co
       setChanging(true);
       window.setTimeout(() => { setCurrentId(id); setChanging(false); }, 135);
     }
-  }
+  }, [ids, tips.length]);
 
-  useEffect(() => { nextTip(true); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [ids.join("|")]);
+  useEffect(() => {
+    const timer = window.setTimeout(() => nextTip(true), 0);
+    return () => window.clearTimeout(timer);
+  }, [nextTip]);
 
   if (!tips.length) return null;
   const current = tips.find((tip) => tip.id === currentId) || tips[0];

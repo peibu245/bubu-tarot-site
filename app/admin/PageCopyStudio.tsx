@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Dispatch, DragEvent, SetStateAction } from "react";
 import type { FontChoice, PageTextStyle, RichBlockKind, RichContentBlock, RichContentItem, SiteContent } from "../../lib/content-types";
 import { copyPages } from "../../lib/page-copy-schema";
@@ -68,10 +68,10 @@ export default function PageCopyStudio({ content, setContent }: { content: SiteC
     scope: activePage.id,
   }), [activePage, baselinePageText, content.pageText, content.pageTextStyles, content.typography]);
 
-  function postPreview() {
+  const postPreview = useCallback(() => {
     if (!iframeRef.current?.contentWindow) return;
     iframeRef.current.contentWindow.postMessage(previewMessage, window.location.origin);
-  }
+  }, [previewMessage]);
 
   function focusPreview(key: string) {
     postPreview();
@@ -82,7 +82,7 @@ export default function PageCopyStudio({ content, setContent }: { content: SiteC
     iframeRef.current?.contentWindow?.postMessage({ type: "bubu-preview:scroll", position }, window.location.origin);
   }
 
-  useEffect(() => { if (previewReady) postPreview(); }, [previewMessage, previewReady]);
+  useEffect(() => { if (previewReady) postPreview(); }, [postPreview, previewReady]);
   useEffect(() => {
     const syncBaseline = (event: Event) => {
       const detail = (event as CustomEvent<Record<string, string>>).detail;
@@ -106,7 +106,7 @@ export default function PageCopyStudio({ content, setContent }: { content: SiteC
     };
     window.addEventListener("message", listener);
     return () => window.removeEventListener("message", listener);
-  }, [activePage]);
+  }, [activePage, postPreview]);
 
   const patchText = (key: string, value: string) => setContent((current) => ({ ...current, pageText: { ...current.pageText, [key]: value } }));
   const patchTextStyle = (key: string, patch: Partial<PageTextStyle>) => setContent((current) => {

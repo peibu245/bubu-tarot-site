@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 
 type Entry = { id: string; nickname: string; message: string; createdAt: string };
 const visitorKeyName = "bubu_guestbook_visitor";
@@ -12,14 +12,14 @@ function visitorKey() {
 }
 
 export default function Guestbook({ copy = {}, compact = false }: { copy?: Record<string, string>; compact?: boolean }) {
-  const t = (key: string, fallback: string) => copy[key] || fallback;
+  const t = useCallback((key: string, fallback: string) => copy[key] || fallback, [copy]);
   const [entries, setEntries] = useState<Entry[]>([]);
   const [nickname, setNickname] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState(() => t("guestbookLoading", "加载留言中…"));
   const [sending, setSending] = useState(false);
 
-  useEffect(() => { fetch("/api/guestbook", { cache: "no-store" }).then((r) => r.json()).then((data) => { setEntries(data.entries ?? []); setStatus(""); }).catch(() => setStatus(t("guestbookLoadError", "留言板暂时无法加载。"))); }, []);
+  useEffect(() => { fetch("/api/guestbook", { cache: "no-store" }).then((r) => r.json()).then((data) => { setEntries(data.entries ?? []); setStatus(""); }).catch(() => setStatus(t("guestbookLoadError", "留言板暂时无法加载。"))); }, [t]);
 
   async function submit(event: FormEvent) {
     event.preventDefault();

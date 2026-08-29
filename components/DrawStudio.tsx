@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import type { CardFact } from "../lib/content-types";
 import { drawDeckOptions, lenormandCards, rwsCards, type DrawCardMeta, type DrawDeckId } from "../lib/card-decks";
@@ -199,7 +200,7 @@ export default function DrawStudio({ facts, copy }: { facts: CardFact[]; copy: C
             <div className="drawn-card-shell">
               <div className="drawn-flip-inner">
                 <div className="drawn-card-back"><span className="drawn-card-pattern" /></div>
-                <div className="drawn-card-front">{selectedMeta.image && <img src={selectedMeta.image} alt={`${selectedMeta.name} ${selectedMeta.english}`} />}</div>
+                <div className="drawn-card-front">{selectedMeta.image && <Image src={selectedMeta.image} alt={`${selectedMeta.name} ${selectedMeta.english}`} width={360} height={620} unoptimized />}</div>
               </div>
             </div>
             <div className="drawn-card-meta">

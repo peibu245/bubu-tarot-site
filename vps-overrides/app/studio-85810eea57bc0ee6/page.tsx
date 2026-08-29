@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import AdminEditor from "../admin/AdminEditor";
 import { getSiteContent } from "../../lib/site-content";
 import { requireAdmin } from "../vps-auth";
@@ -19,12 +20,12 @@ export default async function PrivateStudioPage() {
     <main className="admin-shell">
       <header className="admin-header">
         <Link className="brand dark-brand" href="/">
-          <img src="/brand-mark.jpg" alt="" />
+          <Image src="/brand-mark.jpg" alt="" width={64} height={64} />
           <span>不不tarot</span>
         </Link>
         <div>
           <span>管理后台已登录</span>
-          <a href="/api/studio-85810eea57bc0ee6/logout">退出</a>
+          <Link href="/api/studio-85810eea57bc0ee6/logout">退出</Link>
         </div>
       </header>
       <section className="admin-intro">

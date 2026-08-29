@@ -1,4 +1,6 @@
 "use client";
+/* Contact QR sources are managed in the private editor and may be external. */
+/* eslint-disable @next/next/no-img-element */
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
@@ -39,12 +41,15 @@ export default function ContactGate({ bookingsOpen, contactNote, channels, polic
   const socialChannels = enabledChannels.filter((channel) => channel.group === "social");
 
   useEffect(() => {
-    try {
-      const raw = window.localStorage.getItem(STORAGE_KEY);
-      if (!raw) return;
-      const record = JSON.parse(raw) as Partial<ConsentRecord>;
-      if (record.version === policies.version && record.minimumAge === policies.minimumAge) setUnlocked(true);
-    } catch { /* confirm again */ }
+    const timer = window.setTimeout(() => {
+      try {
+        const raw = window.localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        const record = JSON.parse(raw) as Partial<ConsentRecord>;
+        if (record.version === policies.version && record.minimumAge === policies.minimumAge) setUnlocked(true);
+      } catch { /* confirm again */ }
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, [policies.minimumAge, policies.version]);
 
   useEffect(() => {

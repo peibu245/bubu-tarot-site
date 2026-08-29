@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import MobileNav from "./MobileNav";
 import StudioPreviewBridge from "./StudioPreviewBridge";
 
@@ -12,7 +13,7 @@ export function SiteHeader({ copy }: ChromeProps) {
       <header className="public-header">
         <div className="public-header-inner">
           <Link className="public-brand" href="/" aria-label="不不tarot首页">
-            <img src="/brand-mark.jpg" alt="" />
+            <Image src="/brand-mark.jpg" alt="" width={64} height={64} priority />
             <span>{text(copy, "siteBrand", "不不tarot")}</span>
           </Link>
           <nav className="public-nav" aria-label="网站导航">
@@ -35,7 +36,7 @@ export function SiteFooter({ copy }: ChromeProps) {
     <footer className="public-footer">
       <div className="footer-intro">
         <Link className="public-brand footer-public-brand" href="/">
-          <img src="/brand-mark.jpg" alt="" />
+          <Image src="/brand-mark.jpg" alt="" width={64} height={64} />
           <span>{text(copy, "siteBrand", "不不tarot")}</span>
         </Link>
         <p>{text(copy, "footerIntro", "梦向解读、现实问题咨询与奇思妙想。以文字解读为主。")}</p>

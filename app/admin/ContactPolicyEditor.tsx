@@ -1,4 +1,6 @@
 "use client";
+/* Editor previews accept user-managed local or external QR image URLs. */
+/* eslint-disable @next/next/no-img-element */
 
 import { useState, type Dispatch, type SetStateAction } from "react";
 import type { ContactChannel, SiteContent } from "../../lib/content-types";

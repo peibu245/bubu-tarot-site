@@ -1,4 +1,6 @@
 "use client";
+/* User-managed image URLs cannot be predeclared for Next image optimization. */
+/* eslint-disable @next/next/no-img-element */
 
 import { useEffect, useMemo, useState } from "react";
 import type { RichContentBlock } from "../lib/content-types";
@@ -59,8 +61,14 @@ function markdownToHtml(markdown: string) {
 }
 
 function RichHtml({ value, mode = "markdown", className = "" }: { value: string; mode?: "markdown" | "html"; className?: string }) {
-  const [html, setHtml] = useState("");
-  useEffect(() => { setHtml(mode === "html" ? sanitizeHtml(value) : sanitizeHtml(markdownToHtml(value))); }, [value, mode]);
+  const markdownHtml = useMemo(() => mode === "markdown" ? markdownToHtml(value) : "", [mode, value]);
+  const [sanitized, setSanitized] = useState({ source: "", html: "" });
+  useEffect(() => {
+    if (mode !== "html") return;
+    const timer = window.setTimeout(() => setSanitized({ source: value, html: sanitizeHtml(value) }), 0);
+    return () => window.clearTimeout(timer);
+  }, [value, mode]);
+  const html = mode === "html" ? (sanitized.source === value ? sanitized.html : "") : markdownHtml;
   if (!html) return null;
   return <div className={className} dangerouslySetInnerHTML={{ __html: html }} />;
 }

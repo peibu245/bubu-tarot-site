@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import type { SiteContent } from "../../lib/content-types";
 import CollapsiblePanel from "./CollapsiblePanel";
@@ -17,7 +17,7 @@ export default function HistoryPanel({ setContent }: { setContent: Dispatch<SetS
   const [state, setState] = useState<"idle" | "loading" | "restoring" | "error">("idle");
   const [message, setMessage] = useState("");
 
-  async function load() {
+  const load = useCallback(async () => {
     setState("loading");
     try {
       const response = await fetch("/api/studio-85810eea57bc0ee6/history", { cache: "no-store" });
@@ -26,14 +26,14 @@ export default function HistoryPanel({ setContent }: { setContent: Dispatch<SetS
       setRevisions(data.revisions || []);
       setState("idle");
     } catch { setState("error"); setMessage("历史版本暂时读取失败。"); }
-  }
+  }, []);
 
   useEffect(() => {
-    void load();
+    const initialLoad = window.setTimeout(() => { void load(); }, 0);
     const refresh = () => { void load(); };
     window.addEventListener("bubu-content-saved", refresh);
-    return () => window.removeEventListener("bubu-content-saved", refresh);
-  }, []);
+    return () => { window.clearTimeout(initialLoad); window.removeEventListener("bubu-content-saved", refresh); };
+  }, [load]);
 
   async function restore(revision: Revision) {
     if (!window.confirm(`恢复到 ${displayTime(revision.createdAt)} 的版本？\n\n当前版本会先自动备份，所以之后仍然可以恢复回来。`)) return;

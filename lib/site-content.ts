@@ -2,6 +2,7 @@ import type { AvailabilitySettings, CardFact, ContactChannel, KnowledgeCard, Pag
 import { defaultContactChannels, defaultPolicies } from "./legal-defaults";
 import { defaultCardFacts, defaultSpreadGuides } from "./educational-defaults";
 import { defaultTypography, isFontChoice } from "./typography";
+import { dateKeyInTimeZone } from "./availability";
 
 const CONTENT_VERSION = 17;
 
@@ -131,12 +132,17 @@ export async function getSiteContent(): Promise<SiteContent> {
     const db = await ensureStorage();
     const row = await db.prepare("SELECT payload FROM site_content WHERE id = 1").first<{ payload: string }>();
     if (!row?.payload) return defaultContent;
-    const content = cleanContent(JSON.parse(row.payload));
+    const parsed = JSON.parse(row.payload) as Partial<SiteContent>;
+    const content = cleanContent(parsed);
     if (content.contentVersion < CONTENT_VERSION) {
       const migrated = migrateTerminology(content);
       await db.prepare("UPDATE site_content SET payload = ?, updated_at = CURRENT_TIMESTAMP, updated_by = ? WHERE id = 1")
         .bind(JSON.stringify(migrated), "system:content-v15").run();
       return migrated;
+    }
+    if (JSON.stringify(parsed.availability?.overrides ?? []) !== JSON.stringify(content.availability.overrides)) {
+      await db.prepare("UPDATE site_content SET payload = ?, updated_at = CURRENT_TIMESTAMP, updated_by = ? WHERE id = 1")
+        .bind(JSON.stringify(content), "system:availability-cleanup").run();
     }
     return content;
   } catch {
@@ -196,14 +202,6 @@ function contactUrl(value: unknown): string {
 function blockUrl(value: unknown): string {
   const url = typeof value === "string" ? value.trim().slice(0, 1200) : "";
   return /^(https?:\/\/|\/|#)/i.test(url) ? url : "";
-}
-
-function replaceLegacyTerms(value: string): string {
-  return value
-    .replaceAll("梦向卡牌", "梦占")
-    .replaceAll("现占", "现实问题咨询")
-    .replaceAll("现实议题", "现实问题咨询")
-    .replaceAll("占卜", "卡牌解读");
 }
 
 function normalizeSection(value: unknown): PriceItem["section"] {
@@ -369,10 +367,11 @@ function cleanAvailability(value: unknown): AvailabilitySettings {
     const raw = weeklySource.find((entry) => entry && typeof entry === "object" && Number((entry as { weekday?: unknown }).weekday) === fallback.weekday) as Partial<typeof fallback> | undefined;
     return { weekday: fallback.weekday, status: raw && statuses.has(String(raw.status)) ? raw.status as typeof fallback.status : fallback.status, note: text(raw?.note, 30) };
   });
-  const overrides = Array.isArray(item.overrides) ? item.overrides.slice(0, 120).map((raw) => {
+  const today = dateKeyInTimeZone();
+  const overrides = Array.isArray(item.overrides) ? item.overrides.map((raw) => {
     const row = raw && typeof raw === "object" ? raw as { date?: unknown; status?: unknown; note?: unknown } : {};
     return { date: text(row.date, 10), status: statuses.has(String(row.status)) ? row.status as AvailabilitySettings["overrides"][number]["status"] : "rest" as const, note: text(row.note, 30) };
-  }).filter((row) => /^\d{4}-\d{2}-\d{2}$/.test(row.date)) : [];
+  }).filter((row) => /^\d{4}-\d{2}-\d{2}$/.test(row.date) && row.date >= today).sort((a, b) => a.date.localeCompare(b.date)).slice(0, 120) : [];
   return {
     visible: item.visible !== false,
     title: text(item.title, 30) || defaultAvailability.title,

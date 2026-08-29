@@ -10,7 +10,7 @@ type Entry = { id: string; nickname: string; message: string; createdAt: string;
 
 const cleanText = (value: unknown, max: number) => typeof value === "string" ? value.replace(/[\u0000-\u001f]/g, " ").replace(/\s+/g, " ").trim().slice(0, max) : "";
 const json = (data: unknown, status = 200) => Response.json(data, { status, headers: { "cache-control": "no-store" } });
-const publicEntry = ({ visitorHash: _hash, day: _day, ...entry }: Entry) => entry;
+const publicEntry = (entry: Entry) => ({ id: entry.id, nickname: entry.nickname, message: entry.message, createdAt: entry.createdAt });
 const today = () => new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Shanghai" });
 
 async function readEntries(): Promise<Entry[]> {

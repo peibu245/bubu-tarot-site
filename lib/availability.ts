@@ -2,6 +2,27 @@ import type { AvailabilitySettings, AvailabilityStatus } from "./content-types";
 
 export const weekdayNames = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
 export const statusLabels: Record<AvailabilityStatus, string> = { available: "可约", limited: "紧张", full: "已满", rest: "休息" };
+export const publicTimeZone = "Asia/Shanghai";
+
+export function dateKeyInTimeZone(date = new Date(), timeZone = publicTimeZone) {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(date);
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return `${values.year}-${values.month}-${values.day}`;
+}
+
+export function dateFromKey(value: string) {
+  const [year, month, day] = value.split("-").map(Number);
+  return new Date(year, month - 1, day, 12);
+}
+
+export function monthKey(date: Date) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+}
 
 export function dateKey(date: Date) {
   const year = date.getFullYear();

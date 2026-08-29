@@ -1,6 +1,7 @@
 import { getSiteContent } from "../lib/site-content";
 import { SiteFooter, SiteHeader } from "../components/SiteChrome";
 import Link from "next/link";
+import Image from "next/image";
 import PublicTypography from "../components/PublicTypography";
 import CustomContentZone from "../components/CustomContentZone";
 import Guestbook from "../components/Guestbook";
@@ -68,7 +69,7 @@ export default async function Home() {
         </div>
         <div className="reader-card">
           <div className="reader-card-top"><span>{t("homeReaderEst")}</span><i>{content.bookingsOpen ? t("statusOpen") : t("statusClosed")}</i></div>
-          <div className="reader-avatar"><img src="/brand-mark.jpg" alt="不不tarot头像" /></div>
+          <div className="reader-avatar"><Image src="/brand-mark.jpg" alt="不不tarot头像" width={320} height={320} priority /></div>
           <h2>{t("homeReaderName")}</h2>
           <p className="editable-copy">{t("homeReaderRole")}</p>
           <div className="reader-card-notes">
@@ -98,7 +99,7 @@ export default async function Home() {
       </section>
 
       <section className="about-section" id="about">
-        <div className="about-portrait"><img src="/brand-mark.jpg" alt="不不tarot头像" /><span>{t("homePortraitMark")}</span></div>
+        <div className="about-portrait"><Image src="/brand-mark.jpg" alt="不不tarot头像" width={320} height={320} /><span>{t("homePortraitMark")}</span></div>
         <div className="about-copy">
           <p className="micro-label">{t("homeAboutEyebrow")}</p>
           <h2>{t("homeAboutTitle")}</h2>
