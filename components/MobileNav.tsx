@@ -40,7 +40,7 @@ export default function MobileNav({ copy = {} }: Props) {
       </nav>
     </div>}
     <div className="mobile-bottom-actions" aria-label="快速操作">
-      <Link href="/#services">查看服务</Link>
+      <Link href="/booking#pricing">查看价格</Link>
       <Link href="/booking#contact">联系咨询</Link>
     </div>
   </>;

@@ -112,7 +112,7 @@ export default async function Home() {
         <section className="home-section offer-section">
           <div className="clean-heading compact-heading">
             <div><p className="micro-label">{t("homeOfferEyebrow")}</p><h2>{t("homeOfferTitle")}</h2></div>
-            <Link href="/booking">{t("homeOfferLink")}</Link>
+            <Link href="/booking#pricing">{t("homeOfferLink")}</Link>
           </div>
           <div className="offer-grid">
             {activePromotions.map((promotion) => (

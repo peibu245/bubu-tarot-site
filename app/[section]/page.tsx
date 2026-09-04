@@ -5,6 +5,7 @@ import { getSiteContent } from "../../lib/site-content";
 import type { PriceItem, Promotion } from "../../lib/content-types";
 import PublicTypography from "../../components/PublicTypography";
 import CustomContentZone from "../../components/CustomContentZone";
+import PriceCard from "../../components/PriceCard";
 import type { CSSProperties } from "react";
 
 const sections = {
@@ -51,30 +52,6 @@ const sections = {
     tone: "section-sand",
   },
 } as const;
-
-function PriceCard({ item, featuredNote, bookingsOpen }: { item: PriceItem; featuredNote: string; bookingsOpen: boolean }) {
-  const isNumber = /^\d+(?:\.\d+)?$/.test(item.price);
-  const statusLabel = item.status === "paused" ? "暂不接单" : item.status === "waitlist" ? "可候补" : "开放预约";
-  const actionLabel = item.status === "waitlist" ? "了解候补方式" : "查看预约方式";
-  return (
-    <article className={item.featured ? "booking-price-card featured-price" : "booking-price-card"}>
-      <div className="booking-price-top">
-        <div><span>{item.badge || item.section}</span><h3>{item.title}</h3><small>{item.section}</small></div>
-        <div className="booking-money">{isNumber && <i>¥</i>}<b>{item.price}</b><small>{item.unit}</small></div>
-      </div>
-      <p>{item.description}</p>
-      {(item.delivery || item.turnaround || item.followUp || item.suitableFor) && <dl className="service-meta">
-        {item.delivery && <><dt>交付</dt><dd>{item.delivery}</dd></>}
-        {item.turnaround && <><dt>预计</dt><dd>{item.turnaround}</dd></>}
-        {item.followUp && <><dt>补充</dt><dd>{item.followUp}</dd></>}
-        {item.suitableFor && <><dt>适合</dt><dd>{item.suitableFor}</dd></>}
-      </dl>}
-      <span className={`service-status status-${item.status}`}>{statusLabel}</span>
-      {item.featured && <strong className="featured-note">{featuredNote}</strong>}
-      {bookingsOpen && item.status !== "paused" && <Link className="service-card-cta" href="/booking#contact">{actionLabel}<span aria-hidden="true">→</span></Link>}
-    </article>
-  );
-}
 
 export default async function SectionPage({ params }: { params: Promise<{ section: string }> }) {
   const { section } = await params;

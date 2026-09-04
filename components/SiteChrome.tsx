@@ -49,7 +49,7 @@ export function SiteFooter({ copy }: ChromeProps) {
       </div>
       <div className="footer-column">
         <b>{text(copy, "footerBookingTitle", "预约")}</b>
-        <Link href="/booking">{text(copy, "footerBookingLink", "价格与流程")}</Link>
+        <Link href="/booking#pricing">{text(copy, "footerBookingLink", "价格与流程")}</Link>
         <Link href="/policies">{text(copy, "footerPoliciesLink", "条款与隐私")}</Link>
       </div>
       <p className="footer-copyright">{text(copy, "footerCopyright", "© 2026 不不tarot · 解读内容仅供个人参考与娱乐")}</p>

@@ -1236,3 +1236,73 @@ body { font-size:16px; line-height:1.7; }
   .booking-entry-card p,.booking-price-card p,.dream-service-split p,.service-intro>p,.service-hero div>p:last-child,.policy-card p,.policy-short-note p { overflow-wrap:anywhere; word-break:break-word; }
 }
 
+/* One-page booking path: type -> price -> availability -> contact. */
+#pricing,#availability,#price-dream,#price-reality,#price-ideas { scroll-margin-top:96px; }
+.booking-page .booking-hero { padding-top:64px; padding-bottom:54px; }
+.booking-page .booking-flow { width:min(1180px,calc(100% - 48px)); padding-top:48px; }
+.booking-page .booking-entry-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.booking-page .booking-entry-card { min-height:250px; padding:26px; }
+.booking-page .booking-entry-card.entry-ideas { grid-column:auto; }
+.booking-page .booking-entry-card h3 { margin-top:42px; font-size:32px; }
+.booking-pricing-groups { display:grid; gap:26px; }
+.booking-price-group { padding:30px; border:1px solid #ded1e7; border-radius:24px; }
+.booking-price-group.entry-dream { background:#f3ebfa; }
+.booking-price-group.entry-reality { background:#edf5f0; }
+.booking-price-group.entry-ideas { background:#f5eee5; }
+.booking-price-group-head { margin-bottom:24px; display:flex; align-items:flex-end; justify-content:space-between; gap:24px; }
+.booking-price-group-head p { margin:0 0 5px; color:var(--accent-strong); font-size:11px; font-weight:800; letter-spacing:.13em; }
+.booking-price-group-head h3 { margin:0; font-size:clamp(28px,3vw,40px); }
+.booking-price-group-head>a { flex:none; padding-bottom:3px; border-bottom:1px solid rgba(83,62,93,.35); color:#604d69; font-size:13px; font-weight:700; }
+.booking-price-subgroup+.booking-price-subgroup { margin-top:27px; padding-top:27px; border-top:1px solid rgba(100,75,113,.16); }
+.booking-price-subgroup-title { margin-bottom:13px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+.booking-price-subgroup-title h4 { margin:0; font-size:18px; }
+.booking-price-subgroup-title span { color:#756a7a; font-size:12px; }
+.booking-price-group .booking-price-card { display:flex; min-height:100%; flex-direction:column; }
+.booking-price-group .service-card-cta { width:max-content; margin-top:auto; padding-top:20px; }
+.booking-price-group .price-pending { grid-column:1/-1; }
+.booking-price-offers { margin-top:30px; padding-top:30px; border-top:1px solid var(--line); }
+.booking-price-offers-title { margin-bottom:15px; display:flex; align-items:baseline; gap:12px; }
+.booking-price-offers-title p { margin:0; color:#756a7a; font-size:12px; }
+.booking-price-offers-title h3 { margin:0; font-size:24px; }
+.booking-narrow { width:min(920px,100%); margin-right:auto; margin-left:auto; }
+.booking-prepare-hint { margin:-2px 0 18px; color:#625868; font-size:14px; line-height:1.75; }
+.booking-quick-start { margin-bottom:18px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.booking-quick-start article { min-width:0; padding:16px; display:flex; gap:11px; border:1px solid #dfd3e6; border-radius:13px; background:#fffdfa; }
+.booking-quick-start article>span { flex:none; color:#8a70a0; font-size:10px; font-weight:800; letter-spacing:.08em; }
+.booking-quick-start h3 { margin:0 0 5px; font-size:15px; }
+.booking-quick-start p { margin:0; color:#746a78; font-size:12px; line-height:1.65; }
+
+@media (max-width:1000px) {
+  .booking-page .booking-flow { width:calc(100% - 36px); }
+  .booking-page .booking-entry-grid { grid-template-columns:1fr; }
+  .booking-page .booking-entry-card { min-height:220px; }
+  .booking-price-group { padding:24px; }
+  .booking-quick-start { grid-template-columns:1fr; }
+}
+
+@media (max-width:760px) {
+  #pricing,#availability,#price-dream,#price-reality,#price-ideas { scroll-margin-top:82px; }
+  .booking-page .booking-hero { padding:44px 20px 40px; }
+  .booking-page .booking-avatar { width:92px; height:92px; margin-bottom:22px; }
+  .booking-page .booking-flow { width:calc(100% - 28px); padding-top:34px; }
+  .booking-page .flow-step { margin-bottom:48px; }
+  .booking-page .booking-entry-card { min-height:205px; padding:21px; }
+  .booking-page .booking-entry-card h3 { margin-top:34px; font-size:29px; }
+  .booking-page .booking-entry-card p { font-size:14px; }
+  .booking-price-group { padding:17px; border-radius:19px; }
+  .booking-price-group-head { align-items:flex-start; flex-direction:column; gap:11px; }
+  .booking-price-group-head h3 { font-size:29px; }
+  .booking-price-group-head>a { min-height:34px; display:inline-flex; align-items:center; }
+  .booking-price-subgroup-title { align-items:flex-end; }
+  .booking-price-subgroup-title h4 { font-size:17px; }
+  .booking-price-group .booking-price-card { padding:20px 17px; }
+  .booking-price-group .booking-money { justify-content:start; }
+  .booking-price-group .booking-money small { text-align:left; }
+  .booking-price-offers { margin-top:24px; padding-top:24px; }
+  .booking-price-offers-title { align-items:flex-start; flex-direction:column; gap:3px; }
+  .booking-prepare-hint { font-size:13px; }
+  .booking-quick-start article { padding:14px; }
+  .booking-quick-start h3 { font-size:14px; }
+  .booking-quick-start p { font-size:12px; }
+}
+
